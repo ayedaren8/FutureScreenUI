@@ -1,0 +1,40 @@
+@import '../var.scss';
+
+.fsButton {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: $color-dark--primary;
+    // border: 1px solid #dcdfe6;
+    color: #ffffff;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: 0.1s;
+    font-weight: 400;
+    //禁止元素的文字被选中
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 2px;
+
+    &:hover {
+        color: #ffffff;
+        background-color: rgba($color-dark--primary, $alpha: 0.8);
+    }
+
+    &--light {
+        background-color: $color-light--primary;
+
+        &:hover {
+            color: #ffffff;
+            background-color: rgba($color-light--primary, $alpha: 0.8);
+        }
+    }
+}
