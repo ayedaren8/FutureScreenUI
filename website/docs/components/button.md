@@ -1,13 +1,7 @@
+### 按钮
 <template>
   <div>
-    <h1>hello</h1>
     <fs-button>长按钮</fs-button>
     <fs-button type="light">长按钮</fs-button>
   </div>
 </template>
-<script>
-export default {};
-</script>
-
-<style lang="scss" >
-</style>

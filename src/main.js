@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import fsButton from './components/button/fsButton.vue'
-Vue.component('fsButton',fsButton)
+import FSUI from './../packages/index'
+import "./../packages/theme/index.scss";
+Vue.use(FSUI)
 Vue.config.productionTip = false
 new Vue({
   render: h => h(App),
