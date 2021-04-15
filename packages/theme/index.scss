@@ -1,1 +1,12 @@
-@import './src/fsButton.scss'
+@import './var.scss';
+@import './src/fsButton.scss';
+@import './src/chart.scss';
+@import './src/dialog.scss';
+@import './src/app.scss';
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}

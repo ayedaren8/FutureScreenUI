@@ -1,5 +1,5 @@
 <template>
-  <div class="fsButton" :class="`fsButton--${type}`">
+  <div class="fsButton" :class="`fsButton--${type}`" @click="_click">
     <span>
       <slot>按钮</slot>
     </span>
@@ -13,6 +13,11 @@ export default {
     type: {
       type: String,
       default: "primary",
+    },
+  },
+  methods: {
+    _click() {
+      this.$emit("click");
     },
   },
 };
