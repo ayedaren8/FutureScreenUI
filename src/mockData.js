@@ -1,5 +1,7 @@
 //引入mockjs
 import Mock from 'mockjs';
+import './queue';
+import fixedLenQueue from './queue';
 //使用mockjs模拟数据
 function mockdata(i, j) {
 	return Mock.mock({
@@ -8,7 +10,13 @@ function mockdata(i, j) {
 	}).data;
 }
 
-export function chartData() {
+function mockPieData() {
+	return Mock.mock({
+		'data|5': [{ 'value|1-500': 0, 'name|1': () => Mock.Random.word() }],
+	});
+}
+
+export function barData() {
 	return {
 		title: {
 			text: '校内各楼宇人员数量',
@@ -35,34 +43,43 @@ export function chartData() {
 	};
 }
 
-export const chartData1 = {
-	row: ['一', '二', '三', '四', '五', '六', '日'],
-	column: [
-		{
-			name: '2017',
-			data: [150, 230, 224, 218, 135, 147, 260],
-			type: 'bar',
+export function pieData() {
+	return {
+		title: {
+			text: '校园各类人员占比',
+			subtext: '统计时间：2021年4月5日',
 		},
-	],
-};
+		data: mockPieData().data,
+	};
+}
 
-export const chartData2 = {
-	row: ['一', '二', '三', '四', '五', '六', '日'],
-	column: [
-		{
-			name: '2017',
-			data: [150, 230, 224, 218, 135, 147, 260],
-			type: 'line',
+let tempValue = new fixedLenQueue();
+let tempDate = new fixedLenQueue();
+
+export function lineData() {
+	if (tempValue.full()) {
+		tempValue.outqueue();
+		tempValue.enqueue(Mock.Random.integer(10, 100));
+	} else {
+		tempValue.enqueue(Mock.Random.integer(10, 100));
+	}
+	if (tempDate.full()) {
+		tempDate.outqueue();
+		tempDate.enqueue(new Date().toLocaleTimeString());
+	} else {
+		tempDate.enqueue(new Date().toLocaleTimeString());
+	}
+	return {
+		title: {
+			text: '数据中心出口流量',
+			subtext: '统计时间：2021年4月5日',
 		},
-	],
-};
-export const chartData3 = {
-	row: ['一', '二', '三', '四', '五', '六', '日'],
-	column: [
-		{
-			name: '2017',
-			data: [150, 230, 224, 218, 135, 147, 260],
-			type: 'pie',
-		},
-	],
-};
+		row: tempDate.dataStore,
+		column: [
+			{
+				data: tempValue.dataStore,
+				type: 'line',
+			},
+		],
+	};
+}

@@ -1,8 +1,11 @@
+@import './src/zIndex.scss';
 @import './var.scss';
 @import './src/fsButton.scss';
 @import './src/chart.scss';
 @import './src/dialog.scss';
+@import './src/title.scss';
 @import './src/app.scss';
+
 *,
 *::before,
 *::after {

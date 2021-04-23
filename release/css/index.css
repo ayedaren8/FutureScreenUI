@@ -3,7 +3,7 @@
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
-  background: black;
+  background: #68bac9;
   color: #ffffff;
   -webkit-appearance: none;
   text-align: center;
@@ -19,22 +19,22 @@
   border-radius: 2px; }
   .fsButton:hover {
     color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.8); }
+    background-color: rgba(104, 186, 201, 0.8); }
   .fsButton--light {
     background-color: #0086ff; }
     .fsButton--light:hover {
       color: #ffffff;
       background-color: rgba(0, 134, 255, 0.8); }
   .fsButton--dark {
-    background-color: black; }
+    background-color: #0089a1; }
     .fsButton--dark:hover {
       color: #ffffff;
-      background-color: rgba(0, 0, 0, 0.8); }
+      background-color: rgba(0, 137, 161, 0.8); }
   .fsButton--lightdark {
-    background-color: rgba(0, 0, 0, 0.6); }
+    background-color: rgba(0, 137, 161, 0.6); }
     .fsButton--lightdark:hover {
       color: #ffffff;
-      background-color: rgba(0, 0, 0, 0.4); }
+      background-color: rgba(0, 137, 161, 0.4); }
 
 .fsChart-container {
   display: flex;

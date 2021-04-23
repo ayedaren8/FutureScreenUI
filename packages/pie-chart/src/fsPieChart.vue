@@ -8,11 +8,10 @@ import * as echarts from 'echarts';
 import './chalk';
 import { chartDefaultWidth, chartDefaultHeight } from '../../constants';
 //本地自定义样式
-import { staticOptions, extraOptions, showAxisPointer, showTitle } from './config';
+import { staticOptions, extraOptions, showTitle } from './config';
 export default {
-	name: 'fsLineChart',
+	name: 'fsPieChart',
 	props: {
-		transCategoryAxis: { type: Boolean },
 		chartData: { type: [Array, Object] },
 		title: { type: [String, Object] },
 		width: { type: [Number] },
@@ -25,11 +24,8 @@ export default {
 			chartHeight: this.height || chartDefaultHeight,
 			myEcharts: null,
 			extraOptions,
-			showAxisPointer,
 			showTitle,
 			titleObj: this.title,
-			currentCategoryAxis: 'xAxis',
-			currentValueAxis: 'yAxis',
 			chartOption: JSON.parse(JSON.stringify(staticOptions)),
 		};
 	},
@@ -37,8 +33,6 @@ export default {
 	mounted() {
 		this.myEcharts = echarts.init(this.$refs.container, 'chalk');
 		this.myEcharts.setOption(this.chartOption, true);
-		this.handlerCategoryXY();
-		this.showAxisPointer();
 		this.initOption();
 	},
 
@@ -48,31 +42,19 @@ export default {
 	},
 
 	methods: {
-		/*处理类目轴的位置*/
-		handlerCategoryXY() {
-			if (this.transCategoryAxis) {
-				this.currentCategoryAxis = 'yAxis';
-				this.currentValueAxis = 'xAxis';
-			}
-			this.chartOption[this.currentCategoryAxis] = Object.assign(
-				{ type: 'category', data: this.chartData.row },
-				this.chartOption[this.currentCategoryAxis]
-			);
-			this.chartOption[this.currentValueAxis].type = 'value';
-			this.chartOption.series = this.chartData.column;
-		},
-
 		initOption() {
-			if (this.titleObj) this.showTitle(this.titleObj);
+			if (this.titleObj) this.showTitle();
 		},
 	},
 
 	watch: {
 		chartData: {
 			handler: function(val) {
-				this.$set(this.chartOption, this.currentCategoryAxis, { type: 'category', data: val.row });
-				this.$set(this.chartOption, 'series', val.column);
+				this.$set(this.chartOption.series[0], 'data', val.data);
+				// console.log(this.chartOption.series);
+
 				if (val.title) this.titleObj = val.title;
+				// console.log(val);
 			},
 			deep: true,
 			immediate: true,
@@ -83,25 +65,16 @@ export default {
 				this.myEcharts.setOption(val, true);
 			},
 			deep: true,
-		},
-
-		transCategoryAxis: {
-			handler: function(val) {
-				if (val) {
-					this.currentCategoryAxis = 'yAxis';
-					this.$set(this.chartOption, this.currentCategoryAxis, { type: 'category', data: val.row });
-				}
-			},
+			// immediate: true,
 		},
 
 		titleObj: {
-			handler: function(val) {
-				this.showTitle(val);
+			handler: function() {
+				this.showTitle();
 			},
 			deep: true,
-			// immediate: true,
+			immediate: true,
 		},
 	},
 };
 </script>
-<style lang="scss"></style>

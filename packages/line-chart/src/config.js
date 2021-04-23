@@ -4,9 +4,11 @@ export const staticOptions = {
 	grid: { bottom: '15%', right: '0' },
 	xAxis: {
 		show: true,
+		type: 'category',
 	},
 	yAxis: {
 		show: true,
+		type: 'value',
 		splitLine: { show: false, lineStyle: { opacity: 0.1 } },
 	},
 	dataZoom: [{ id: 'dataZoomX', type: 'inside', xAxisIndex: [0], filterMode: 'filter' }],
@@ -31,13 +33,13 @@ export function showAxisPointer() {
 	];
 }
 
-export function showTitle() {
-	if (Object.prototype.toString.call(this.titleObj) === '[object Object]') {
-		let title = this.extraOptions.title;
-		if (this.titleObj.text) title.text = this.titleObj.text;
-		if (this.titleObj.subtext) title.subtext = this.titleObj.subtext;
+export function showTitle(titleObj) {
+	if (Object.prototype.toString.call(titleObj) === '[object Object]') {
+		let title = JSON.parse(JSON.stringify(extraOptions.title));
+		if (titleObj.text) title.text = titleObj.text;
+		if (titleObj.subtext) title.subtext = titleObj.subtext;
 		this.chartOption.title = title;
 	} else {
-		this.chartOption.title = { show: true, text: this.titleObj };
+		this.chartOption.title = { show: true, text: titleObj };
 	}
 }

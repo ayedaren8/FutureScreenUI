@@ -1,4 +1,5 @@
-### 折线图
+
+### 柱状图
 
 
 <template>
@@ -19,7 +20,7 @@ export default {
 					{
 						name: '2017',
 						data: [150, 230, 224, 218, 135, 147, 260],
-						type: 'line',
+						type: 'bar',
 					},
 				],
 			},

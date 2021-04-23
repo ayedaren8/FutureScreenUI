@@ -6,7 +6,7 @@
 		height: $chart-default-height;
 		box-sizing: border-box;
 		border: 1px solid rgba($color-line--primary, 0.6);
-		z-index: 999;
+		z-index: $z-fsChart;
 		// overflow: scroll;
 	}
 }

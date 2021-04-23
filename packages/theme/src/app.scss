@@ -10,7 +10,7 @@ $sidePanelHeight: 98vh;
 
 .mainFrame {
 	display: flex;
-	z-index: 1;
+	z-index: $z-maninFrame;
 	justify-content: space-between;
 }
 
@@ -32,7 +32,7 @@ $sidePanelHeight: 98vh;
 	align-items: center;
 	&::before {
 		content: '';
-		z-index: 2;
+		z-index: $z-sidePanelBack;
 		position: absolute;
 		height: $sidePanelHeight;
 		width: $sidePanelWidth;
@@ -46,99 +46,3 @@ $sidePanelHeight: 98vh;
 		// box-shadow: inset 0 0 0 2px #42b983;
 	}
 }
-
-// .leftSidePanel {
-// 	position: relative;
-// 	display: flex;
-// 	padding: 10px;
-// 	height: 98vh;
-// 	width: $sidePanelWidth;
-// 	flex-direction: column;
-// 	justify-content: space-between;
-// 	align-items: center;
-// 	border: 1px solid rgba(#5c8ad5, 0.6);
-// }
-
-// .leftSidePanel-line {
-// 	overflow: hidden;
-// 	position: absolute;
-// 	opacity: 0.3;
-// 	left: 0;
-// 	top: 0;
-// 	padding: 10px;
-// 	height: 98vh;
-// 	width: $sidePanelWidth;
-// 	border: 1px solid rgba(#5c8ad5, 0.6);
-// 	&::before {
-// 		content: '';
-// 		position: absolute;
-// 		z-index: -2;
-// 		left: -150%;
-// 		top: -75%;
-// 		width: 400%;
-// 		height: 200%;
-// 		background-color: #1a232a;
-// 		background-repeat: no-repeat;
-// 		background-position: 0 0;
-// 		background-image: conic-gradient(transparent, rgba(168, 239, 255, 1), transparent 10%);
-// 		animation: rotate 4s linear infinite;
-// 	}
-// 	&::after {
-// 		content: '';
-// 		position: absolute;
-// 		z-index: -1;
-// 		left: 2px;
-// 		top: 2px;
-// 		width: calc(100% - 4px);
-// 		height: calc(100% - 4px);
-// 		background: rgba(0, 5, 16, 1);
-// 	}
-// }
-
-// .rightSidePanel {
-// 	position: relative;
-// 	display: flex;
-// 	padding: 10px;
-// 	height: 98vh;
-// 	width: $sidePanelWidth;
-// 	flex-direction: column;
-// 	justify-content: space-between;
-// 	align-items: center;
-// 	border: 1px solid rgba(#5c8ad5, 0.6);
-// 	box-sizing: border-box;
-// }
-// .rightSidePanel-line {
-// 	overflow: hidden;
-// 	position: absolute;
-// 	opacity: 0.3;
-// 	left: 0;
-// 	top: 0;
-// 	padding: 10px;
-// 	height: 98vh;
-// 	width: $sidePanelWidth;
-// 	border: 1px solid rgba(#5c8ad5, 0.6);
-// 	&::before {
-// 		content: '';
-// 		position: absolute;
-// 		z-index: -2;
-// 		left: -150%;
-// 		top: -75%;
-// 		width: 400%;
-// 		height: 200%;
-// 		background-color: #1a232a;
-// 		background-repeat: no-repeat;
-// 		background-position: 0 0;
-// 		background-image: conic-gradient(transparent, rgba(168, 239, 255, 1), transparent 10%);
-// 		animation: rotate 4s linear infinite;
-// 	}
-// 	&::after {
-// 		content: '';
-// 		position: absolute;
-// 		z-index: -1;
-// 		left: 2px;
-// 		top: 2px;
-// 		width: calc(100% - 4px);
-// 		height: calc(100% - 4px);
-// 		background: rgba(0, 5, 16, 1);
-// 	}
-// }

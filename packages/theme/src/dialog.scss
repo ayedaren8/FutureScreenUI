@@ -1,6 +1,6 @@
 .dialog {
 	&-mask {
-		z-index: 1000;
+		z-index: $z-dialogMask;
 		position: fixed;
 		width: 100vw;
 		height: 100vh;
@@ -14,7 +14,7 @@
 		border-radius: 5px;
 
 		// where
-		z-index: 1001;
+		z-index: $z-dialogInnerbbox;
 		position: absolute;
 		display: flex;
 		justify-content: space-between;

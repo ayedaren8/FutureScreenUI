@@ -3,7 +3,7 @@
 	line-height: 1;
 	white-space: nowrap;
 	cursor: pointer;
-	background: $color-dark--primary;
+	background: $color-brandcolor;
 	color: #ffffff;
 	-webkit-appearance: none;
 	text-align: center;
@@ -17,9 +17,10 @@
 	max-height: 40px;
 	font-size: 18px;
 	border-radius: 2px;
+
 	&:hover {
 		color: #ffffff;
-		background-color: rgba($color-dark--primary, $alpha: 0.8);
+		background-color: rgba($color-brandcolor, $alpha: 0.8);
 	}
 
 	&--light {
@@ -37,6 +38,7 @@
 			background-color: rgba($color-dark--primary, $alpha: 0.8);
 		}
 	}
+
 	&--lightdark {
 		background-color: rgba($color-dark--primary, $alpha: 0.6);
 		&:hover {
