@@ -11,6 +11,7 @@
     "theme": "gulp build --gulpfile packages/theme/gulpfile.js"
   },
   "dependencies": {
+    "chroma-js": "^2.1.1",
     "core-js": "^3.10.1",
     "echarts": "^5.0.2",
     "node-sass": "^5.0.0",

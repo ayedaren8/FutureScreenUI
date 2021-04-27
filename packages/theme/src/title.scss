@@ -5,7 +5,7 @@
 	align-items: center;
 	width: 100vw;
 	height: 10vh;
-	z-index: 999;
+	z-index: $z-maninFrame;
 	&-container {
 		display: flex;
 		width: 50%;
@@ -13,24 +13,35 @@
 		align-items: center;
 	}
 	@mixin line() {
-		width: 50px;
-		height: 1px;
-		border-top: 1px solid white;
+		width: 80px;
+		height: 2px;
 		margin: 0px 15px;
 	}
 	&-line {
 		&--left {
 			@include line();
+			background-image: linear-gradient(
+				to left,
+				rgba($color: $color-brandcolor, $alpha: 0),
+				rgba($color: $color-brandcolor, $alpha: 1)
+			);
 		}
 		&--right {
 			@include line();
+			background-image: linear-gradient(
+				to right,
+				rgba($color: $color-brandcolor, $alpha: 0),
+				rgba($color: $color-brandcolor, $alpha: 1)
+			);
 		}
 	}
 	&-text {
 		display: inline-block;
-		font-size: 2rem;
-		font-weight: bold;
+		font-size: 2.5rem;
+		// font-weight: bold;
+		font-family: RZBGQN;
 		color: rgba($color: #fff, $alpha: 0.87);
-		letter-spacing: 1px;
+		text-shadow: 0 0 16px rgba($color: $color-brandcolor, $alpha: 0.87);
+		letter-spacing: 10px;
 	}
 }

@@ -6,6 +6,7 @@ export default function fixedLenQueue(fixedLength) {
 	this.full = full;
 	this.empty = empty;
 }
+
 function enqueue(element) {
 	if (this.full()) {
 		// throw new Error(" You can't do that,because the fixedLengthQueue is full ");

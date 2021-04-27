@@ -1,0 +1,46 @@
+.fsMarquee {
+	position: relative;
+	margin: 0 2vw;
+	height: 36px;
+	border: 2px solid rgba($color: $color-brandcolor, $alpha: 0.6);
+	background-color: rgba($color: $color-dark-background, $alpha: 0.6);
+	backdrop-filter: blur(1px);
+	overflow: hidden;
+	&-content {
+		display: flex;
+		color: rgba($color: $color-brandcolor, $alpha: 0.87);
+		line-height: 36px;
+		font-size: 18px;
+		letter-spacing: 2px;
+		animation: 20s marquee linear;
+		animation-iteration-count: 3;
+		opacity: 0;
+	}
+	&::after {
+		content: '';
+		position: absolute;
+		width: 5%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		background-color: rgba($color: $color-dark-background, $alpha: 1);
+	}
+}
+
+@keyframes marquee {
+	0% {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	20% {
+		transform: translateX(80%);
+		opacity: 1;
+	}
+	80% {
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(0%);
+		opacity: 0;
+	}
+}

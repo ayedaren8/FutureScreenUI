@@ -1,11 +1,33 @@
+//color variable
 $color-light--primary: #0086ff;
 $color-dark--primary: #0089a1;
 $color-dark-background: #001529;
-// $color-line--primary: #5c8ad5;
 $color-darkBlue-1: #001529;
 $color-cyan: #68bac9;
 $color-brandcolor: #68bac9;
 $color-background--primary: #000510;
 $color-line--primary: #68bac9;
+$color-contrast: orange;
+$color-adjacent: #0acc78;
+$color-status-normal: #2ed13d;
+$color-status-warning: #fac500;
+$color-status-danger: #ff2700;
+
+//size variable
 $chart-default-width: 400px;
 $chart-default-height: 300px;
+$chart-card-width: 400px;
+$chart-card-height: 300px;
+$panel-default-width: 550px;
+$panelWidth: 420px;
+$panelHeight: 98vh;
+
+@font-face {
+	font-family: DIN;
+	src: url(./DIN-Alternate-Bold.ttf);
+}
+
+@font-face {
+	font-family: RZBGQN;
+	src: url(./assets/RZBGQN.ttf);
+}

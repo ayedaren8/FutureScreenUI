@@ -10,7 +10,7 @@
 
 <script>
 export default {
-	name: 'fsScrollInfoBar',
+	name: 'fsTitle',
 	data() {
 		return {
 			titleText: '智慧校园监控大屏',

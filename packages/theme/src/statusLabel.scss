@@ -1,0 +1,45 @@
+.fsStatusLabel {
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	z-index: $z-maninFrame;
+
+	&-label {
+		display: inline-block;
+		line-height: 24px;
+		font-size: 14px;
+		&:disabled {
+			filter: grayscale(1);
+		}
+	}
+	&-point {
+		color: rgba($color: $color-brandcolor, $alpha: 0.87);
+		margin-right: 24px;
+		@mixin status-point($status-color) {
+			display: inline-block;
+			content: '';
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			margin-right: 8px;
+			color: $status-color;
+			background: $status-color;
+			box-shadow: 0px 0px 8px 4px rgba($color: $status-color, $alpha: 0.6);
+		}
+		&--normal {
+			&::before {
+				@include status-point($color-status-normal);
+			}
+		}
+		&--warning {
+			&::before {
+				@include status-point($color-status-warning);
+			}
+		}
+		&--danger {
+			&::before {
+				@include status-point($color-status-danger);
+			}
+		}
+	}
+}

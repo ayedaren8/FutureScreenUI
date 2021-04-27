@@ -1,0 +1,18 @@
+.fsDigitalBlock {
+	display: inline-block;
+	padding: 24px 32px;
+	min-width: (-4 + $chart-default-width)/3;
+	&-digital {
+		font-family: DIN;
+		font-size: 36px;
+		color: rgba($color: #fff, $alpha: 0.87);
+	}
+	&-unit {
+		vertical-align: middle;
+		font-size: 12px;
+		color: rgba($color: $color-brandcolor, $alpha: 0.87);
+	}
+	&-name {
+		color: $color-line--primary;
+	}
+}

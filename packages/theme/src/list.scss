@@ -1,0 +1,42 @@
+.fsList {
+	padding: 10px;
+	height: $chart-default-height + 100px;
+
+	& table {
+		display: block;
+		border-spacing: 0;
+		max-height: $chart-default-height;
+		white-space: nowrap;
+		border: 1px solid rgba($color-line--primary, 0.6);
+		border-bottom: none;
+		overflow-y: scroll;
+	}
+	& thead {
+		height: 56px;
+	}
+	& tr {
+		height: 48px;
+		color: rgba($color: #fff, $alpha: 0.87);
+	}
+
+	& th {
+		height: 56px;
+		font-size: 16px;
+		color: rgba($color-brandcolor, 0.87);
+	}
+	& td {
+		color: rgba($color-brandcolor, 0.97);
+		height: 48px;
+		max-height: 48px;
+		max-width: 200px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-align: center;
+		padding: 0px 12px;
+		border-bottom: 1px solid rgba($color-line--primary, 0.3);
+	}
+
+	& col {
+		width: 200px;
+	}
+}

@@ -1,5 +1,5 @@
 <template>
-	<div class="fsPanel"></div>
+	<div class="fsPanel"><span></span><span></span><span></span><span></span><slot /></div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ export default {
 	name: 'fsPanel',
 	data() {
 		return {
-			titleText: '智慧校园监控大屏',
+			// titleText: '智慧校园监控大屏',
 		};
 	},
 };

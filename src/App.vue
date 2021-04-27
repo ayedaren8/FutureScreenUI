@@ -1,31 +1,41 @@
 <template>
 	<div>
 		<fs-title></fs-title>
+		<fs-status-label :status="[1, 1, 1]"></fs-status-label>
 		<div class="mainFrame">
-			<div class="sidePanel">
+			<fs-panel>
 				<span class="sidePanel-line--left"></span>
 				<fs-line-chart ref="test" :chartData="barData" :title="{ text: '标题', subtext: '副标题' }"></fs-line-chart>
-				<fs-line-chart :chartData="lineData"></fs-line-chart>
-				<fs-line-chart :chartData="lineData" transCategoryAxis></fs-line-chart>
-			</div>
-			<div class="sidePanel">
-				<!-- <span class="sidePanel-line--left"></span> -->
+				<fs-line-chart :chartData="lineData" :height="200"></fs-line-chart>
 				<fs-pie-chart :chartData="pieData" transCategoryAxis></fs-pie-chart>
-				<fs-line-chart :chartData="barData" transCategoryAxis></fs-line-chart>
-				<!-- <fs-line-chart :chartData="barData" transCategoryAxis></fs-line-chart> -->
-			</div>
+			</fs-panel>
+			<fs-panel>
+				<fs-card><fs-digital-block /><fs-digital-block /></fs-card>
+				<fs-card><fs-list :listHeader="tableData.headData" :listData="tableData.rowData"></fs-list></fs-card>
+				<fs-card
+					><fs-video-player
+						src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218114723HDu3hhxqIT.mp4"
+					></fs-video-player
+				></fs-card>
+			</fs-panel>
+
 			<fs-key-visual><amap /></fs-key-visual>
 		</div>
+		<fs-marquee />
 	</div>
 </template>
 <script>
+import FsDigitalBlock from '../packages/digital-block/src/fsDigitalBlock.vue';
+import fsPanel from '../packages/panel/src/fsPanel.vue';
 import * as mockData from './mockData';
 export default {
+	components: { fsPanel, FsDigitalBlock },
 	data() {
 		return {
 			barData: mockData.barData(),
 			pieData: mockData.pieData(),
 			lineData: mockData.lineData(),
+			tableData: mockData.tableData(),
 		};
 	},
 	mounted() {
@@ -34,7 +44,6 @@ export default {
 				this.barData = mockData.barData();
 				this.pieData = mockData.pieData();
 				this.lineData = mockData.lineData();
-				console.log(this.lineData);
 			}.bind(this),
 			3500
 		);

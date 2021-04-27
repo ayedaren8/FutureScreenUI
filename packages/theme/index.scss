@@ -1,11 +1,18 @@
-@import './src/zIndex.scss';
 @import './var.scss';
+@import './src/fsAnimation.scss';
+@import './src/zIndex.scss';
+@import './src/layout.scss';
+@import './src/card.scss';
+@import './src/digitalBlock.scss';
 @import './src/fsButton.scss';
 @import './src/chart.scss';
 @import './src/dialog.scss';
 @import './src/title.scss';
 @import './src/app.scss';
-
+@import './src/marquee.scss';
+@import './src/list.scss';
+@import './src/statusLabel.scss';
+@import './src/video-player.scss';
 *,
 *::before,
 *::after {
