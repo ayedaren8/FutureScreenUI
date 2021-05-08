@@ -1,39 +1,55 @@
-import { area, CIDP_NORTH } from './config';
+import { CIDP_NORTH, NOUTH_MARKERS, markerContent, getInfoWindow } from './config';
 export function initMap(id) {
 	// let AMapUI = (this.AMapUI = window.AMapUI);
 	let AMap = (this.AMap = window.AMap);
-	let Loca = (this.Loca = window.Loca);
-	var colors = ['#035594', '#117aab', '#28a2b8', '#64c4c1', '#86cfbb'];
 	var map = new AMap.Map(id, {
 		mapStyle: 'amap://styles/darkblue',
-		features: ['bg', 'road', 'point', 'building'],
+		features: ['bg', 'road', 'building'],
 		center: CIDP_NORTH,
-		zoom: 33,
+		zoom: 19,
+		zoomEnable: false,
 		pitch: 0,
-		viewMode: '3D',
 	});
 
-	var layer = new Loca.PolygonLayer({
-		map: map,
-		fitView: false,
+	map.on('click', function(ev) {
+		console.log(ev);
+		var lnglat = ev.lnglat;
+		console.log([lnglat.lng, lnglat.lat]);
+	});
+	const base_circle = {
+		radius: 2, // 圆半径
+		fillColor: '#68bac9', // 圆形填充颜色
+		strokeColor: '#68bac9', // 描边颜色
+		strokeWeight: 1, // 描边宽度
+	};
+
+	let markerList = NOUTH_MARKERS.map((e) => {
+		console.log(e.extData[3]);
+		return new AMap.Marker(
+			Object.assign({}, e, base_circle, {
+				content: markerContent(e, e.extData[3]),
+			})
+		);
 	});
 
-	layer.setData(area, {
-		lnglat: 'lnglat',
+	markerList.forEach((e) => {
+		e.on('click', function(ev) {
+			map.panTo(ev.lnglat);
+			let instance = getInfoWindow(ev);
+			let infoWindow = new AMap.InfoWindow({
+				isCustom: true,
+				content: instance.$el, //传入 dom 对象，或者 html 字符串
+			});
+			instance.onClose = function() {
+				map.panTo(CIDP_NORTH);
+				infoWindow.close();
+			};
+			infoWindow.on('close', function() {
+				instance.del();
+			});
+			// 打开信息窗体
+			infoWindow.open(map, ev.lnglat);
+		});
 	});
-
-	layer.setOptions({
-		style: {
-			opacity: 0.76,
-			color: function(res) {
-				var index = res.index;
-				return colors[index % colors.length];
-			},
-			height: function() {
-				return Math.random() * 500 + 100;
-			},
-		},
-	});
-
-	layer.render();
+	map.add(markerList);
 }

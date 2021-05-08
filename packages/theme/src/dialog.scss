@@ -5,6 +5,7 @@
 		width: 100vw;
 		height: 100vh;
 		background: rgba(0, 11, 15, 0.6);
+		backdrop-filter: blur(5px);
 	}
 	&-innerbox {
 		// how

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<fs-title></fs-title>
-		<fs-status-label :status="[1, 1, 1]"></fs-status-label>
+		<fs-status-label :position="[66, 10]" :status="[1, 1, 1]"></fs-status-label>
 		<div class="mainFrame">
 			<fs-panel>
 				<span class="sidePanel-line--left"></span>
@@ -10,7 +10,7 @@
 				<fs-pie-chart :chartData="pieData" transCategoryAxis></fs-pie-chart>
 			</fs-panel>
 			<fs-panel>
-				<fs-card><fs-digital-block /><fs-digital-block /></fs-card>
+				<fs-card><fs-digital-block v-bind="digitalData[0]"/><fs-digital-block v-bind="digitalData[1]"/></fs-card>
 				<fs-card><fs-list :listHeader="tableData.headData" :listData="tableData.rowData"></fs-list></fs-card>
 				<fs-card
 					><fs-video-player
@@ -18,24 +18,21 @@
 					></fs-video-player
 				></fs-card>
 			</fs-panel>
-
 			<fs-key-visual><amap /></fs-key-visual>
 		</div>
 		<fs-marquee />
 	</div>
 </template>
 <script>
-import FsDigitalBlock from '../packages/digital-block/src/fsDigitalBlock.vue';
-import fsPanel from '../packages/panel/src/fsPanel.vue';
 import * as mockData from './mockData';
 export default {
-	components: { fsPanel, FsDigitalBlock },
 	data() {
 		return {
 			barData: mockData.barData(),
 			pieData: mockData.pieData(),
 			lineData: mockData.lineData(),
 			tableData: mockData.tableData(),
+			digitalData: mockData.digitalData(),
 		};
 	},
 	mounted() {
@@ -44,6 +41,7 @@ export default {
 				this.barData = mockData.barData();
 				this.pieData = mockData.pieData();
 				this.lineData = mockData.lineData();
+				this.digitalData = mockData.digitalData();
 			}.bind(this),
 			3500
 		);

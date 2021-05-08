@@ -3,13 +3,8 @@
 // import 'future_screen/release/css/index.css'
 
 //开发环境
-import FSUI from './../../../release/FSUI.umd'
-import './../../../release/css/index.css'
-export default ({
-    Vue,
-    options,
-    router,
-    siteData
-}) => {
-    Vue.use(FSUI);
+import FSUI from './../../../release/FSUI.umd';
+import './../../../release/style/index.css';
+export default ({ Vue }) => {
+	Vue.use(FSUI);
 };

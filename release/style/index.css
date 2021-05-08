@@ -1,0 +1,443 @@
+@font-face {
+  font-family: DIN;
+  src: url(./font/DIN-Alternate-Bold.ttf); }
+
+@font-face {
+  font-family: RZBGQN;
+  src: url(./font/RZBGQN.ttf); }
+
+@keyframes span-twinkle {
+  0% {
+    opacity: 0; }
+  30% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
+.fsPanel {
+  box-sizing: border-box;
+  margin: 2vh 2vw;
+  max-width: 420px;
+  max-height: 90vh;
+  position: relative;
+  display: block; }
+  .fsPanel::before {
+    content: '';
+    z-index: 2;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 21, 41, 0.6);
+    border: 1px solid rgba(104, 186, 201, 0.6);
+    backdrop-filter: blur(1px); }
+  .fsPanel > span:nth-child(1) {
+    position: absolute;
+    z-index: 5;
+    display: block;
+    width: 16px;
+    height: 16px;
+    animation: span-twinkle 3s infinite;
+    left: -1px;
+    top: -1px;
+    border-left: 3px solid #0acc78;
+    border-top: 3px solid #0acc78; }
+  .fsPanel > span:nth-child(2) {
+    position: absolute;
+    z-index: 5;
+    display: block;
+    width: 16px;
+    height: 16px;
+    animation: span-twinkle 3s infinite;
+    right: -1px;
+    top: -1px;
+    border-right: 3px solid #0acc78;
+    border-top: 3px solid #0acc78; }
+  .fsPanel > span:nth-child(3) {
+    position: absolute;
+    z-index: 5;
+    display: block;
+    width: 16px;
+    height: 16px;
+    animation: span-twinkle 3s infinite;
+    left: -1px;
+    bottom: -1px;
+    border-left: 3px solid #0acc78;
+    border-bottom: 3px solid #0acc78; }
+  .fsPanel > span:nth-child(4) {
+    position: absolute;
+    z-index: 5;
+    display: block;
+    width: 16px;
+    height: 16px;
+    animation: span-twinkle 3s infinite;
+    right: -1px;
+    bottom: -1px;
+    border-right: 3px solid #0acc78;
+    border-bottom: 3px solid #0acc78; }
+
+.fsCard {
+  position: relative;
+  z-index: 999;
+  margin: 16px 10px;
+  box-sizing: border-box;
+  border: 1px solid rgba(104, 186, 201, 0.87);
+  box-shadow: 0px 0px 16px rgba(104, 186, 201, 0.6) inset;
+  animation: 20s bulin linear infinite; }
+
+@keyframes bulin {
+  0% {
+    box-shadow: 0px 0px 4px rgba(104, 186, 201, 0.6) inset; }
+  20% {
+    box-shadow: 0px 0px 16px rgba(104, 186, 201, 0.6) inset; }
+  90% {
+    box-shadow: 0px 0px 16px rgba(104, 186, 201, 0.6) inset; }
+  100% {
+    box-shadow: 0px 0px 4px rgba(104, 186, 201, 0.6) inset; } }
+
+.fsDigitalBlock {
+  display: inline-block;
+  padding: 24px 32px;
+  min-width: 132px; }
+  .fsDigitalBlock-digital {
+    font-family: DIN;
+    font-size: 36px;
+    color: rgba(255, 255, 255, 0.87); }
+  .fsDigitalBlock-box {
+    display: block; }
+  .fsDigitalBlock-numberBox {
+    display: inline-block;
+    width: 20px;
+    height: 40px;
+    font-size: 36px;
+    line-height: 40px;
+    position: relative;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    overflow: hidden; }
+    .fsDigitalBlock-numberBox span {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+      transition: transform 0.5s ease-in-out;
+      letter-spacing: 10px; }
+  .fsDigitalBlock-unit {
+    vertical-align: middle;
+    line-height: 40px;
+    font-size: 12px;
+    color: rgba(104, 186, 201, 0.87); }
+  .fsDigitalBlock-name {
+    color: #68bac9; }
+
+.fsButton {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #68bac9;
+  color: #ffffff;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  transition: 0.1s;
+  font-weight: 400;
+  padding: 12px 20px;
+  min-width: 80px;
+  max-height: 40px;
+  font-size: 18px;
+  border-radius: 2px; }
+  .fsButton:hover {
+    color: #ffffff;
+    background-color: rgba(104, 186, 201, 0.8); }
+  .fsButton--light {
+    background-color: #0086ff; }
+    .fsButton--light:hover {
+      color: #ffffff;
+      background-color: rgba(0, 134, 255, 0.8); }
+  .fsButton--dark {
+    background-color: #0089a1; }
+    .fsButton--dark:hover {
+      color: #ffffff;
+      background-color: rgba(0, 137, 161, 0.8); }
+  .fsButton--lightdark {
+    background-color: rgba(0, 137, 161, 0.6); }
+    .fsButton--lightdark:hover {
+      color: #ffffff;
+      background-color: rgba(0, 137, 161, 0.4); }
+
+.fsChart-container {
+  z-index: 999;
+  margin: 16px 10px;
+  padding: 20px;
+  width: 400px;
+  height: 300px;
+  box-sizing: border-box;
+  border: 1px solid rgba(104, 186, 201, 0.87); }
+
+.dialog-mask {
+  z-index: 1000;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 11, 15, 0.6);
+  backdrop-filter: blur(5px); }
+
+.dialog-innerbox {
+  width: 500px;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  z-index: 1001;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  left: 50%;
+  top: 50%;
+  transform: translate(-250px, -200px); }
+
+.dialog-header {
+  display: flex;
+  color: #000b0f;
+  height: 20%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 18px 16px;
+  line-height: 1;
+  border-bottom: 1px solid #000b0f;
+  justify-content: space-between;
+  align-items: center; }
+  .dialog-header .icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px; }
+  .dialog-header .text {
+    display: inline-block;
+    height: 4p8x; }
+    .dialog-header .text span {
+      margin: 0;
+      font-size: 24px;
+      line-height: 48px;
+      color: rgba(0, 11, 15, 0.8);
+      vertical-align: bottom; }
+
+.dialog-content {
+  height: 60%;
+  padding: 20px 20px; }
+  .dialog-content-palceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000b0f;
+    height: 100%;
+    font-size: 28px; }
+
+.dialog-footer {
+  display: flex;
+  color: #000b0f;
+  height: 20%;
+  width: 100%;
+  border-top: 1px solid #000b0f;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 18px 16px; }
+  .dialog-footer > * {
+    margin-right: 16px; }
+
+.fstitle {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10vh;
+  z-index: 1; }
+  .fstitle-container {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center; }
+  .fstitle-line--left {
+    width: 80px;
+    height: 2px;
+    margin: 0px 15px;
+    background-image: linear-gradient(to left, rgba(104, 186, 201, 0), #68bac9); }
+  .fstitle-line--right {
+    width: 80px;
+    height: 2px;
+    margin: 0px 15px;
+    background-image: linear-gradient(to right, rgba(104, 186, 201, 0), #68bac9); }
+  .fstitle-text {
+    display: inline-block;
+    font-size: 2.5rem;
+    white-space: nowrap;
+    font-family: RZBGQN;
+    color: rgba(255, 255, 255, 0.87);
+    text-shadow: 0 0 16px rgba(104, 186, 201, 0.87);
+    letter-spacing: 10px; }
+
+@font-face {
+  font-family: DIN;
+  src: url(./font/DIN-Alternate-Bold.ttf); }
+
+@font-face {
+  font-family: RZBGQN;
+  src: url(./font/RZBGQN.ttf); }
+
+@keyframes rotate {
+  100% {
+    transform: rotate(1turn); } }
+
+.mainFrame {
+  display: flex;
+  z-index: 1;
+  justify-content: space-between; }
+
+.fsMarquee {
+  position: relative;
+  margin: 0 2vw;
+  height: 36px;
+  border: 2px solid rgba(104, 186, 201, 0.6);
+  background-color: rgba(0, 21, 41, 0.6);
+  backdrop-filter: blur(1px);
+  overflow: hidden; }
+  .fsMarquee-content {
+    display: flex;
+    color: rgba(104, 186, 201, 0.87);
+    line-height: 36px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    animation: 20s marquee linear;
+    animation-iteration-count: 3;
+    opacity: 0; }
+  .fsMarquee::after {
+    content: '';
+    position: absolute;
+    width: 5%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #001529; }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+    opacity: 0; }
+  20% {
+    transform: translateX(80%);
+    opacity: 1; }
+  80% {
+    opacity: 1; }
+  100% {
+    transform: translateX(0%);
+    opacity: 0; } }
+
+.fsList {
+  padding: 10px;
+  height: 400px; }
+  .fsList table {
+    display: block;
+    border-spacing: 0;
+    max-height: 300px;
+    white-space: nowrap;
+    border: 1px solid rgba(104, 186, 201, 0.6);
+    border-bottom: none;
+    overflow-y: scroll;
+    margin: 0 !important; }
+  .fsList thead {
+    height: 56px; }
+  .fsList tr {
+    height: 48px !important;
+    background: none !important;
+    color: rgba(255, 255, 255, 0.87);
+    border: none !important; }
+  .fsList th {
+    height: 56px !important;
+    font-size: 16px !important;
+    color: rgba(104, 186, 201, 0.87) !important;
+    border: none !important; }
+  .fsList td {
+    color: rgba(104, 186, 201, 0.97) !important;
+    height: 48px !important;
+    max-height: 48px !important;
+    max-width: 200px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    text-align: center;
+    padding: 0px 12px;
+    border: none !important;
+    border-bottom: 1px solid rgba(104, 186, 201, 0.3) !important; }
+  .fsList col {
+    width: 200px; }
+
+.fsStatusLabel {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  z-index: 1; }
+  .fsStatusLabel-label {
+    display: inline-block;
+    line-height: 24px;
+    font-size: 14px; }
+    .fsStatusLabel-label:disabled {
+      filter: grayscale(1); }
+  .fsStatusLabel-point {
+    color: rgba(104, 186, 201, 0.87);
+    margin-right: 24px; }
+    .fsStatusLabel-point--normal::before {
+      display: inline-block;
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+      color: #2ed13d;
+      background: #2ed13d;
+      box-shadow: 0px 0px 8px 4px rgba(46, 209, 61, 0.6); }
+    .fsStatusLabel-point--warning::before {
+      display: inline-block;
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+      color: #fac500;
+      background: #fac500;
+      box-shadow: 0px 0px 8px 4px rgba(250, 197, 0, 0.6); }
+    .fsStatusLabel-point--danger::before {
+      display: inline-block;
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+      color: #ff2700;
+      background: #ff2700;
+      box-shadow: 0px 0px 8px 4px rgba(255, 39, 0, 0.6); }
+
+.fsVideoPlayer {
+  display: block;
+  text-align: center; }
+  .fsVideoPlayer-title {
+    margin: 8px 20px;
+    text-align: left;
+    color: rgba(104, 186, 201, 0.87);
+    height: 36px; }
+    .fsVideoPlayer-title span {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 36px; }
+  .fsVideoPlayer-container {
+    display: inline-block;
+    margin-bottom: 20px;
+    width: 360px; }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }

@@ -3,18 +3,17 @@ $corner-border: 3px solid rgba($color-adjacent, 1);
 	//how
 	box-sizing: border-box;
 	margin: 2vh 2vw;
-	max-width: $chart-default-width + 20px;
+	width: $chart-default-width + 20px;
 	max-height: 90vh;
+	overflow: hidden;
+
 	// height: 90vh;
 	//where
 	position: relative;
 
 	//then
 	display: block;
-	// flex-direction: column;
-	// justify-content: space-between;
-	// align-items: center;
-	&::before {
+	&::after {
 		content: '';
 		z-index: $z-panelBack;
 		position: absolute;

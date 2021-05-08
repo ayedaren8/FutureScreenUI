@@ -1,18 +1,21 @@
 <template>
-	<fs-button @click="show">show</fs-button>
+	<fs-card><fs-digital-block v-bind="digitalData[0]"/><fs-digital-block v-bind="digitalData[1]"/></fs-card>
 </template>
 
 <script>
 export default {
-	mounted() {},
-	methods: {
-		show() {
-			this.$Dialog({
-				title: '温馨提示',
-				text: '为了更好的使用大屏请使用全屏，点击确定使用。',
-				onConfirm() {},
-			});
-		},
+	data() {
+		return {
+			digitalData: mockData.digitalData(),
+		};
+	},
+	mounted() {
+		setInterval(
+			function() {
+				this.digitalData = mockData.digitalData();
+			}.bind(this),
+			3500
+		);
 	},
 };
 </script>

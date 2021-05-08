@@ -7,8 +7,31 @@
 		font-size: 36px;
 		color: rgba($color: #fff, $alpha: 0.87);
 	}
+	&-box {
+		display: block;
+	}
+	&-numberBox {
+		display: inline-block;
+		width: 20px;
+		height: 40px;
+		font-size: 36px;
+		line-height: 40px;
+		position: relative;
+		writing-mode: vertical-lr;
+		text-orientation: upright;
+		overflow: hidden;
+		// background: red;
+		span {
+			position: absolute;
+			left: 50%;
+			transform: translate(-50%, 0);
+			transition: transform 0.5s ease-in-out;
+			letter-spacing: 10px;
+		}
+	}
 	&-unit {
 		vertical-align: middle;
+		line-height: 40px;
 		font-size: 12px;
 		color: rgba($color: $color-brandcolor, $alpha: 0.87);
 	}

@@ -1,7 +1,7 @@
 <template>
-	<div class="fsVideoPlayer" controls>
-		<div class="fsVideoPlayer-title">实时监控</div>
-		<video :src="src" class="fsVideoPlayer-container"></video>
+	<div class="fsVideoPlayer">
+		<div class="fsVideoPlayer-title"><span>实时监控</span></div>
+		<video :src="src" class="fsVideoPlayer-container" loop autoplay="false"></video>
 	</div>
 </template>
 
@@ -11,6 +11,5 @@ export default {
 		src: { type: String },
 	},
 	name: 'fsVideoPlayer',
-	data() {},
 };
 </script>

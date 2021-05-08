@@ -2,14 +2,14 @@
 	<div
 		class="fsStatusLabel"
 		:style="{
-			top: `${
+			left: `${
 				typeof position[0] === 'number'
 					? position[0] + '%'
 					: null || typeof position.x === 'number'
 					? position.x + 'px'
 					: null
 			}`,
-			left: `${
+			top: `${
 				typeof position[1] === 'number'
 					? position[1] + '%'
 					: null || (position && typeof position.y === 'number')

@@ -1,3 +1,17 @@
+const fs = require('fs');
+const path = require('path');
+function componentsScaner() {
+	let temp = [];
+	let scanerPath = path.resolve(__dirname + '../../components');
+	Array.prototype.concat(temp, fs.readdirSync(scanerPath)).forEach((e) => {
+		let n = e.split('.');
+		n.splice(-1) == 'md' && n[0] !== 'index' ? temp.push(n[0]) : null;
+	});
+	return {
+		'/components/': temp,
+	};
+}
+
 module.exports = {
 	title: 'Future Screen UI',
 	description: '智慧行业数据可视化组件库',
@@ -11,7 +25,7 @@ module.exports = {
 			},
 		],
 	],
-	extraWatchFiles: ['./sidebar.js'],
+	extraWatchFiles: ['./config.js'],
 	themeConfig: {
 		search: false,
 		logo: '/logo.png',
@@ -30,7 +44,24 @@ module.exports = {
 			},
 		],
 		sidebar: {
-			'/components/': ['', 'button', 'line-chart', 'bar-chart', 'dialog', 'fullscreen', 'amap'],
+			'/components/': [
+				'bar-chart',
+				'button',
+				'card',
+				'color',
+				'dialog',
+				'digital-block',
+				'fullscreen',
+				'line-chart',
+				'list',
+				'marquee',
+				'panel',
+				'pie-chart',
+				'status-lable',
+				'title',
+				'video-player',
+				'amap',
+			],
 		},
 	},
 };

@@ -103,3 +103,18 @@ export function tableData() {
 		rowData,
 	};
 }
+
+export function digitalData() {
+	return [
+		{
+			name: '校内人员总数',
+			unit: '人',
+			number: Mock.Random.integer(7600, 8100),
+		},
+		{
+			name: '流动人员数量',
+			unit: '人',
+			number: Mock.Random.integer(100, 400),
+		},
+	];
+}

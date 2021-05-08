@@ -10,8 +10,8 @@ $color-line--primary: #68bac9;
 $color-contrast: orange;
 $color-adjacent: #0acc78;
 $color-status-normal: #2ed13d;
-$color-status-warning: #fac500;
-$color-status-danger: #ff2700;
+$color-status-warning: #bb8c0f;
+$color-status-danger: #b20000;
 
 //size variable
 $chart-default-width: 400px;
@@ -24,10 +24,10 @@ $panelHeight: 98vh;
 
 @font-face {
 	font-family: DIN;
-	src: url(./DIN-Alternate-Bold.ttf);
+	src: url(./font/DIN-Alternate-Bold.ttf);
 }
 
 @font-face {
 	font-family: RZBGQN;
-	src: url(./assets/RZBGQN.ttf);
+	src: url(./font/RZBGQN.ttf);
 }
