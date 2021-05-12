@@ -533,6 +533,32 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "1dde":
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__("d039");
+var wellKnownSymbol = __webpack_require__("b622");
+var V8_VERSION = __webpack_require__("2d00");
+
+var SPECIES = wellKnownSymbol('species');
+
+module.exports = function (METHOD_NAME) {
+  // We can't use this feature detection in V8 since it causes
+  // deoptimization and serious performance degradation
+  // https://github.com/zloirock/core-js/issues/677
+  return V8_VERSION >= 51 || !fails(function () {
+    var array = [];
+    var constructor = array.constructor = {};
+    constructor[SPECIES] = function () {
+      return { foo: 1 };
+    };
+    return array[METHOD_NAME](Boolean).foo !== 1;
+  });
+};
+
+
+/***/ }),
+
 /***/ "2266":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -112018,6 +112044,13 @@ module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
 
 /***/ }),
 
+/***/ "495d":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "4d64":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -112948,6 +112981,17 @@ module.exports = function (NAME) {
 
 /***/ }),
 
+/***/ "7805":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_infoWindow_vue_vue_type_style_index_0_id_71f35943_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("495d");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_infoWindow_vue_vue_type_style_index_0_id_71f35943_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_infoWindow_vue_vue_type_style_index_0_id_71f35943_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+
+
+/***/ }),
+
 /***/ "7839":
 /***/ (function(module, exports) {
 
@@ -113199,6 +113243,24 @@ module.exports = !fails(function () {
   // eslint-disable-next-line es/no-object-defineproperty -- required for testing
   return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
 });
+
+
+/***/ }),
+
+/***/ "8418":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var toPrimitive = __webpack_require__("c04e");
+var definePropertyModule = __webpack_require__("9bf2");
+var createPropertyDescriptor = __webpack_require__("5c6c");
+
+module.exports = function (object, key, value) {
+  var propertyKey = toPrimitive(key);
+  if (propertyKey in object) definePropertyModule.f(object, propertyKey, createPropertyDescriptor(0, value));
+  else object[propertyKey] = value;
+};
 
 
 /***/ }),
@@ -114243,6 +114305,75 @@ try {
   // problems, please detail your unique predicament in a GitHub issue.
   Function("r", "regeneratorRuntime = r")(runtime);
 }
+
+
+/***/ }),
+
+/***/ "99af":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var fails = __webpack_require__("d039");
+var isArray = __webpack_require__("e8b5");
+var isObject = __webpack_require__("861d");
+var toObject = __webpack_require__("7b0b");
+var toLength = __webpack_require__("50c4");
+var createProperty = __webpack_require__("8418");
+var arraySpeciesCreate = __webpack_require__("65f0");
+var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+var wellKnownSymbol = __webpack_require__("b622");
+var V8_VERSION = __webpack_require__("2d00");
+
+var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
+var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
+var MAXIMUM_ALLOWED_INDEX_EXCEEDED = 'Maximum allowed index exceeded';
+
+// We can't use this feature detection in V8 since it causes
+// deoptimization and serious performance degradation
+// https://github.com/zloirock/core-js/issues/679
+var IS_CONCAT_SPREADABLE_SUPPORT = V8_VERSION >= 51 || !fails(function () {
+  var array = [];
+  array[IS_CONCAT_SPREADABLE] = false;
+  return array.concat()[0] !== array;
+});
+
+var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('concat');
+
+var isConcatSpreadable = function (O) {
+  if (!isObject(O)) return false;
+  var spreadable = O[IS_CONCAT_SPREADABLE];
+  return spreadable !== undefined ? !!spreadable : isArray(O);
+};
+
+var FORCED = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT;
+
+// `Array.prototype.concat` method
+// https://tc39.es/ecma262/#sec-array.prototype.concat
+// with adding support of @@isConcatSpreadable and @@species
+$({ target: 'Array', proto: true, forced: FORCED }, {
+  // eslint-disable-next-line no-unused-vars -- required for `.length`
+  concat: function concat(arg) {
+    var O = toObject(this);
+    var A = arraySpeciesCreate(O, 0);
+    var n = 0;
+    var i, k, length, len, E;
+    for (i = -1, length = arguments.length; i < length; i++) {
+      E = i === -1 ? O : arguments[i];
+      if (isConcatSpreadable(E)) {
+        len = toLength(E.length);
+        if (n + len > MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+        for (k = 0; k < len; k++, n++) if (k in E) createProperty(A, n, E[k]);
+      } else {
+        if (n >= MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+        createProperty(A, n++, E);
+      }
+    }
+    A.length = n;
+    return A;
+  }
+});
 
 
 /***/ }),
@@ -115989,6 +116120,29 @@ module.exports = function (KEY, length, exec, sham) {
 
 /***/ }),
 
+/***/ "d81d":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $map = __webpack_require__("b727").map;
+var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
+
+// `Array.prototype.map` method
+// https://tc39.es/ecma262/#sec-array.prototype.map
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  map: function map(callbackfn /* , thisArg */) {
+    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
 /***/ "da84":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -116819,6 +116973,238 @@ var es_function_name = __webpack_require__("b0c0");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
+// EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
+var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
+var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/dialog/src/fsDialog.vue?vue&type=template&id=3e327e14&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"dialog-mask"},[_c('div',{staticClass:"dialog-innerbox"},[_c('div',{staticClass:"dialog-header"},[_vm._t("header",[_c('div',{staticClass:"text"},[_c('span',[_vm._v(_vm._s(_vm.title || '提示'))])]),_c('div',{staticClass:"icon",on:{"click":_vm._cancel}},[_c('svg',{attrs:{"t":"1618278577376","viewBox":"0 0 1024 1024","version":"1.1","xmlns":"http://www.w3.org/2000/svg","p-id":"1142"}},[_c('path',{attrs:{"d":"M842.947458 778.116917 576.847937 512.013303 842.946434 245.883083c8.67559-8.674567 13.447267-20.208251 13.43908-32.477692-0.008186-12.232602-4.7727-23.715121-13.414521-32.332383-8.655124-8.677637-20.149922-13.450337-32.384571-13.4575-12.286838 0-23.808242 4.771677-32.474622 13.434987L512.019443 447.143876 245.88206 181.050496c-8.66331-8.66331-20.175505-13.434987-32.416294-13.434987-12.239765 0-23.75196 4.770653-32.414247 13.43294-8.66024 8.636704-13.428847 20.12434-13.437034 32.356942-0.008186 12.269441 4.76349 23.803125 13.437034 32.476669l266.135336 266.13022L181.050496 778.11794c-8.664334 8.66331-13.43601 20.173458-13.43601 32.41527 0 12.239765 4.7727 23.752983 13.437034 32.417317 8.662287 8.66331 20.173458 13.43294 32.413224 13.43294 12.240789 0 23.754007-4.770653 32.416294-13.43294l266.134313-266.100544 266.101567 266.100544c8.66331 8.66331 20.185738 13.43294 32.4429 13.43294 12.265348-0.008186 23.74889-4.771677 32.369222-13.412474C860.81643 825.081555 860.821547 795.991006 842.947458 778.116917z","p-id":"1143"}})])])])],2),_c('div',{staticClass:"dialog-content"},[_vm._t("default",[_c('span',{staticClass:"dialog-content-palceholder"},[_vm._v(_vm._s(_vm.text || '这是一个提示框!'))])])],2),_c('div',{staticClass:"dialog-footer"},[_c('fs-button',{attrs:{"type":"lightdark"},on:{"click":_vm._cancel}},[_vm._v("取消")]),_c('fs-button',{attrs:{"type":"dark"},on:{"click":_vm._confirm}},[_vm._v("确认")])],1)])])}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./packages/dialog/src/fsDialog.vue?vue&type=template&id=3e327e14&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/dialog/src/fsDialog.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var fsDialogvue_type_script_lang_js_ = ({
+  name: 'fsDialog',
+  data: function data() {
+    return {
+      show: false,
+      closed: false,
+      title: '',
+      text: '',
+      dialogTitle: this.title
+    };
+  },
+  methods: {
+    _cancel: function _cancel() {
+      //绑定的用户传入的回调
+      if (typeof this.onCancel === 'function') {
+        this.onCancel();
+      }
+
+      this.close();
+    },
+    _confirm: function _confirm() {
+      if (typeof this.onConfirm === 'function') {
+        this.onConfirm();
+      }
+
+      this.close();
+    },
+    close: function close() {
+      this.closed = true;
+
+      if (typeof this.onClose === 'function') {
+        this.onClose(this);
+      }
+    }
+  },
+  watch: {
+    closed: function closed(newVal) {
+      if (newVal) {
+        this.show = false;
+      }
+    }
+  }
+});
+// CONCATENATED MODULE: ./packages/dialog/src/fsDialog.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_fsDialogvue_type_script_lang_js_ = (fsDialogvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functional component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./packages/dialog/src/fsDialog.vue
+
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  src_fsDialogvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var fsDialog = (component.exports);
+// CONCATENATED MODULE: ./packages/dialog/src/main.js
+
+
+var DialogConstructor = external_commonjs_vue_commonjs2_vue_root_Vue_default.a.extend(fsDialog);
+var main_instance;
+
+var Dialog = function Dialog(options) {
+  options = options || {};
+
+  if (typeof options === 'string') {
+    options = {
+      text: options
+    };
+  }
+
+  main_instance = new DialogConstructor({
+    data: options
+  });
+  main_instance.$mount();
+  document.body.insertBefore(main_instance.$el, document.body.firstChild);
+  main_instance.show = true;
+  return main_instance;
+};
+
+/* harmony default export */ var main = (Dialog);
 // CONCATENATED MODULE: ./packages/utils.js
 function rfs() {
   /* 进入全屏*/
@@ -116855,8 +117241,8 @@ function isFullScreen() {
   return !!(document.fullscreen || document.mozFullScreen || document.webkitIsFullScreen || document.webkitFullScreen || document.msFullScreen);
 }
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/amap/src/amap.vue?vue&type=template&id=e307886e&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"map","onclick":"event.stopPropagation()"}})}
-var staticRenderFns = []
+var amapvue_type_template_id_e307886e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"map","onclick":"event.stopPropagation()"}})}
+var amapvue_type_template_id_e307886e_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./packages/amap/src/amap.vue?vue&type=template&id=e307886e&
@@ -116961,55 +117347,520 @@ function remoteLoad(url, hasCallback) {
     document.body.removeChild(scriptElement);
   }
 }
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
+var es_array_concat = __webpack_require__("99af");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/amap/src/infoWindow.vue?vue&type=template&id=71f35943&scoped=true&
+var infoWindowvue_type_template_id_71f35943_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{},[_c('fs-panel',{attrs:{"width":500}},[_c('fs-card',[_c('div',{staticClass:"infowindow-header"},[_c('span',{staticClass:"infowindow-title"},[_vm._v(_vm._s(_vm.title))]),_c('div',{staticClass:"infowindow-icon",on:{"click":_vm._cancel}},[_c('svg',{attrs:{"t":"1618278577376","viewBox":"0 0 1024 1024","version":"1.1","xmlns":"http://www.w3.org/2000/svg","p-id":"1142"}},[_c('path',{attrs:{"d":"M842.947458 778.116917 576.847937 512.013303 842.946434 245.883083c8.67559-8.674567 13.447267-20.208251 13.43908-32.477692-0.008186-12.232602-4.7727-23.715121-13.414521-32.332383-8.655124-8.677637-20.149922-13.450337-32.384571-13.4575-12.286838 0-23.808242 4.771677-32.474622 13.434987L512.019443 447.143876 245.88206 181.050496c-8.66331-8.66331-20.175505-13.434987-32.416294-13.434987-12.239765 0-23.75196 4.770653-32.414247 13.43294-8.66024 8.636704-13.428847 20.12434-13.437034 32.356942-0.008186 12.269441 4.76349 23.803125 13.437034 32.476669l266.135336 266.13022L181.050496 778.11794c-8.664334 8.66331-13.43601 20.173458-13.43601 32.41527 0 12.239765 4.7727 23.752983 13.437034 32.417317 8.662287 8.66331 20.173458 13.43294 32.413224 13.43294 12.240789 0 23.754007-4.770653 32.416294-13.43294l266.134313-266.100544 266.101567 266.100544c8.66331 8.66331 20.185738 13.43294 32.4429 13.43294 12.265348-0.008186 23.74889-4.771677 32.369222-13.412474C860.81643 825.081555 860.821547 795.991006 842.947458 778.116917z","p-id":"1143"}})])])])]),_c('fs-card',[_c('div',{staticClass:"infowindow-body"},[_c('fs-digital-block',_vm._b({},'fs-digital-block',{ name: '发热人数', number: _vm.extData[0], unit: '人' },false)),_c('fs-digital-block',_vm._b({},'fs-digital-block',{ name: '昨日未归', number: _vm.extData[1], unit: '人' },false)),_c('fs-digital-block',_vm._b({attrs:{"status":_vm.extData[3]},on:{"rules":_vm.statusRules}},'fs-digital-block',{
+						name: '电力负载',
+						number: _vm.extData[2],
+						unit: 'kw',
+					},false))],1)])],1)],1)}
+var infoWindowvue_type_template_id_71f35943_scoped_true_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./packages/amap/src/infoWindow.vue?vue&type=template&id=71f35943&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/card/src/fsCard.vue?vue&type=template&id=41b76179&
+var fsCardvue_type_template_id_41b76179_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsCard",style:({ width: (_vm.width + "px") })},[_vm._t("default")],2)}
+var fsCardvue_type_template_id_41b76179_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./packages/card/src/fsCard.vue?vue&type=template&id=41b76179&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
+var es_number_constructor = __webpack_require__("a9e3");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/card/src/fsCard.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+/* harmony default export */ var fsCardvue_type_script_lang_js_ = ({
+  name: 'fsCard',
+  props: {
+    width: {
+      type: Number
+    }
+  },
+  data: function data() {
+    return {};
+  }
+});
+// CONCATENATED MODULE: ./packages/card/src/fsCard.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_fsCardvue_type_script_lang_js_ = (fsCardvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./packages/card/src/fsCard.vue
+
+
+
+
+
+/* normalize component */
+
+var fsCard_component = normalizeComponent(
+  src_fsCardvue_type_script_lang_js_,
+  fsCardvue_type_template_id_41b76179_render,
+  fsCardvue_type_template_id_41b76179_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var fsCard = (fsCard_component.exports);
+// CONCATENATED MODULE: ./packages/card/index.js
+
+
+
+fsCard.install = function (Vue) {
+  Vue.component(fsCard.name, fsCard);
+};
+
+/* harmony default export */ var card = (fsCard);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/digital-block/src/fsDigitalBlock.vue?vue&type=template&id=48bfa96a&scoped=true&
+var fsDigitalBlockvue_type_template_id_48bfa96a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsDigitalBlock"},[_c('div',{staticClass:"fsDigitalBlock-digital"},[_vm._l((_vm.numArr),function(num,index){return _c('div',{key:index,staticClass:"fsDigitalBlock-numberBox"},[_c('span',{style:({
+					transform: ("translate(-50%,-" + (Number(num) * 10) + "%)"),
+					color: _vm.status ? _vm.color[_vm.status] : _vm.color['normal'],
+				})},[_vm._v("0123456789")])])}),_c('span',{staticClass:"fsDigitalBlock-unit"},[_vm._v(_vm._s(_vm.unit || '个'))])],2),_c('div',{staticClass:"fsDigitalBlock-name"},[_c('span',[_vm._v(_vm._s(_vm.name || '数据项'))])])])}
+var fsDigitalBlockvue_type_template_id_48bfa96a_scoped_true_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./packages/digital-block/src/fsDigitalBlock.vue?vue&type=template&id=48bfa96a&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
+var es_regexp_exec = __webpack_require__("ac1f");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.split.js
+var es_string_split = __webpack_require__("1276");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/digital-block/src/fsDigitalBlock.vue?vue&type=script&lang=js&
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var fsDigitalBlockvue_type_script_lang_js_ = ({
+  name: 'fsDigitalBlock',
+  props: {
+    name: {
+      type: String
+    },
+    number: {
+      type: Number
+    },
+    unit: {
+      type: String
+    },
+    status: {
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      color: {
+        normal: 'rgba(255,255,255,0.87)',
+        warning: '#fac500',
+        danger: '#ff2700'
+      }
+    };
+  },
+  mounted: function mounted() {},
+  computed: {
+    numArr: function numArr() {
+      return String(this.number).split('');
+    }
+  },
+  methods: {}
+});
+// CONCATENATED MODULE: ./packages/digital-block/src/fsDigitalBlock.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_fsDigitalBlockvue_type_script_lang_js_ = (fsDigitalBlockvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./packages/digital-block/src/fsDigitalBlock.vue
+
+
+
+
+
+/* normalize component */
+
+var fsDigitalBlock_component = normalizeComponent(
+  src_fsDigitalBlockvue_type_script_lang_js_,
+  fsDigitalBlockvue_type_template_id_48bfa96a_scoped_true_render,
+  fsDigitalBlockvue_type_template_id_48bfa96a_scoped_true_staticRenderFns,
+  false,
+  null,
+  "48bfa96a",
+  null
+  
+)
+
+/* harmony default export */ var fsDigitalBlock = (fsDigitalBlock_component.exports);
+// CONCATENATED MODULE: ./packages/digital-block/index.js
+
+
+
+fsDigitalBlock.install = function (Vue) {
+  Vue.component(fsDigitalBlock.name, fsDigitalBlock);
+};
+
+/* harmony default export */ var digital_block = (fsDigitalBlock);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/amap/src/infoWindow.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ var infoWindowvue_type_script_lang_js_ = ({
+  comments: {
+    fsCard: card,
+    fsDigitalBlock: digital_block
+  },
+  data: function data() {
+    return {
+      title: null,
+      status: null,
+      extData: null
+    };
+  },
+  methods: {
+    _cancel: function _cancel() {
+      if (typeof this.onClose === 'function') {
+        this.onClose();
+        this.$destroy();
+      }
+    },
+    statusRules: function statusRules(val) {
+      if (val > 8000) {
+        this.status = 'danger';
+      }
+    }
+  },
+  created: function created() {
+    this.title = this.target.w.title;
+    this.extData = this.target.w.extData;
+  },
+  mounted: function mounted() {
+    console.log(this);
+  },
+  destroyed: function destroyed() {
+    console.log('destroyed');
+  }
+});
+// CONCATENATED MODULE: ./packages/amap/src/infoWindow.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_infoWindowvue_type_script_lang_js_ = (infoWindowvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./packages/amap/src/infoWindow.vue?vue&type=style&index=0&id=71f35943&lang=scss&scoped=true&
+var infoWindowvue_type_style_index_0_id_71f35943_lang_scss_scoped_true_ = __webpack_require__("7805");
+
+// CONCATENATED MODULE: ./packages/amap/src/infoWindow.vue
+
+
+
+
+
+
+/* normalize component */
+
+var infoWindow_component = normalizeComponent(
+  src_infoWindowvue_type_script_lang_js_,
+  infoWindowvue_type_template_id_71f35943_scoped_true_render,
+  infoWindowvue_type_template_id_71f35943_scoped_true_staticRenderFns,
+  false,
+  null,
+  "71f35943",
+  null
+  
+)
+
+/* harmony default export */ var src_infoWindow = (infoWindow_component.exports);
 // CONCATENATED MODULE: ./packages/amap/src/config.js
+
 // 高德地图 key
 var MapKey = 'd9d7b5fedb49f18077512eee5321cc8f'; // 地图限定城市
 
-var MapCityName = '北京';
 var CIDP = {
-  lat: 116.800189,
+  lat: 116.800434,
   lng: 39.955123
 };
 var CIDP_SOURTH = [116.800189, 39.955123];
 var CIDP_NORTH = [116.799793, 39.963474];
-var config_area = [{
-  'lnglat': [[116.800189, 39.978022], [116.80019, 39.977026], [116.80019, 39.977123], [116.80019, 39.977164], [116.800189, 39.978175], [116.800185, 39.978135], [116.800184, 39.978093], [116.800183, 39.978091]]
+var NOUTH_BUILDINGS = {
+  N1: [116.79905, 39.964321],
+  N2: [116.799034, 39.964658],
+  N3: [116.798127, 39.964313],
+  N4: [116.798084, 39.964633],
+  N5: [116.798074, 39.963947],
+  N6: [116.799109, 39.964021],
+  WANGSHU: [116.799758, 39.964235],
+  TIANYI: [116.800434, 39.963375],
+  CHANGGENG: [116.800182, 39.962372],
+  PLAYGROUND: [116.798573, 39.962726]
+};
+var extDatas = {
+  N1: [0, 24, 6762, 'normal'],
+  N2: [1, 22, 4322, 'normal'],
+  N3: [0, 22, 1235, 'normal'],
+  N4: [0, 63, 1345, 'normal'],
+  N5: [1, 74, 9989, 'danger'],
+  N6: [0, 87, 8900, 'warning'],
+  WANGSHU: [2, 35, 7689, 'warning'],
+  TIANYI: [2, 35, 5426, 'normal'],
+  CHANGGENG: [0, 22, 8732, 'normal'],
+  PLAYGROUND: [0, 21, 1201, 'normal']
+};
+var NOUTH_MARKERS = [{
+  position: NOUTH_BUILDINGS.N1,
+  center: NOUTH_BUILDINGS.N1,
+  title: '北辰园1号楼',
+  text: '北辰园1号楼',
+  id: 'N1',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.N2,
+  center: NOUTH_BUILDINGS.N2,
+  title: '北辰园2号楼',
+  text: '北辰园2号楼',
+  id: 'N2',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.N3,
+  center: NOUTH_BUILDINGS.N3,
+  title: '北辰园3号楼',
+  text: '北辰园3号楼',
+  id: 'N3',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.N4,
+  center: NOUTH_BUILDINGS.N4,
+  title: '北辰园4号楼',
+  text: '北辰园4号楼',
+  id: 'N4',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.N5,
+  center: NOUTH_BUILDINGS.N5,
+  title: '北辰园5号楼',
+  text: '北辰园5号楼',
+  id: 'N5',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.N6,
+  center: NOUTH_BUILDINGS.N6,
+  title: '北辰园6号楼',
+  text: '北辰园6号楼',
+  id: 'N6',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.WANGSHU,
+  center: NOUTH_BUILDINGS.WANGSHU,
+  title: '北辰园校号楼餐厅',
+  text: '北辰园校号楼餐厅',
+  id: 'WANGSHU',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.TIANYI,
+  center: NOUTH_BUILDINGS.TIANYI,
+  title: '天仪楼',
+  text: '天仪楼',
+  id: 'TIANYI',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.CHANGGENG,
+  center: NOUTH_BUILDINGS.CHANGGENG,
+  title: '长庚楼',
+  text: '长庚楼',
+  id: 'CHANGGENG',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
+}, {
+  position: NOUTH_BUILDINGS.PLAYGROUND,
+  center: NOUTH_BUILDINGS.PLAYGROUND,
+  title: '操场',
+  text: '操场',
+  id: 'PLAYGROUND',
+
+  get extData() {
+    return extDatas[this.id];
+  }
+
 }];
+var markerContent = function markerContent(data, status) {
+  var color = {
+    normal: '#2ed13d',
+    warning: '#BB8C0F',
+    danger: '#B20000'
+  };
+  var statusColor = status && status in color ? color[status] : color['normal'];
+  var icon = "\n\t<svg t=\"1620443403993\" style='display:block;' viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"8436\" width=\"20\" height=\"20\"><path d=\"M896.02 469.27h-45.41C831.35 314.92 709.09 192.66 554.74 173.4v-45.41c0-23.46-19.2-42.66-42.66-42.66-23.47 0-42.66 19.2-42.66 42.66v45.41C315.06 192.65 192.8 314.92 173.54 469.27h-45.41c-23.47 0-42.66 19.2-42.66 42.66 0 23.46 19.2 42.66 42.66 42.66h45.41C192.8 708.94 315.06 831.2 469.41 850.46v45.41c0 23.46 19.2 42.66 42.66 42.66 23.47 0 42.66-19.2 42.66-42.66v-45.41C709.08 831.2 831.34 708.94 850.6 554.59h45.41c23.47 0 42.66-19.2 42.66-42.66 0.01-23.47-19.19-42.66-42.65-42.66z m-131.84 0h-131.8C620.01 433.01 591 404 554.73 391.63V259.82c106.96 18.05 191.4 102.49 209.45 209.45z m-294.77 42.66c0-23.46 19.2-42.66 42.66-42.66 23.47 0 42.66 19.2 42.66 42.66 0 23.46-19.2 42.66-42.66 42.66-23.46 0-42.66-19.2-42.66-42.66z m0-252.11v131.81c-36.26 12.37-65.27 41.38-77.65 77.64h-131.8c18.06-106.96 102.5-191.4 209.45-209.45zM259.96 554.59h131.8c12.37 36.26 41.38 65.27 77.65 77.64v131.81c-106.95-18.06-191.39-102.5-209.45-209.45z m294.77 209.45V632.23c36.26-12.37 65.27-41.38 77.65-77.64h131.8c-18.05 106.95-102.49 191.39-209.45 209.45z\" fill=\"".concat(statusColor, "\" p-id=\"8437\"></path></svg>\n\t");
+  var html = "<div style='display: flex;flex-direction: column;align-items: center;justify-content: center; color:#68bac9;font-size:12px'>".concat(icon, "<span style=\"display:block;white-space: nowrap;\">").concat(data.title, "</span></div>");
+  return html;
+};
+
+
+function getInfoWindow(options) {
+  var instance;
+  options ? options : {};
+
+  if (!instance) {
+    var Constructor = external_commonjs_vue_commonjs2_vue_root_Vue_default.a.extend(src_infoWindow);
+    instance = new Constructor({
+      data: options
+    });
+    instance.$mount();
+  }
+
+  instance.onClose = null;
+  instance.del = instance.$destroy;
+  return instance;
+}
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
+var es_array_map = __webpack_require__("d81d");
+
 // CONCATENATED MODULE: ./packages/amap/src/initMap.js
+
+
+
 
 function initMap(id) {
   // let AMapUI = (this.AMapUI = window.AMapUI);
   var AMap = this.AMap = window.AMap;
-  var Loca = this.Loca = window.Loca;
-  var colors = ['#035594', '#117aab', '#28a2b8', '#64c4c1', '#86cfbb'];
   var map = new AMap.Map(id, {
     mapStyle: 'amap://styles/darkblue',
-    features: ['bg', 'road', 'point', 'building'],
+    features: ['bg', 'road', 'building'],
     center: CIDP_NORTH,
-    zoom: 33,
-    pitch: 0,
-    viewMode: '3D'
+    zoom: 19,
+    zoomEnable: false,
+    pitch: 0
   });
-  var layer = new Loca.PolygonLayer({
-    map: map,
-    fitView: false
+  map.on('click', function (ev) {
+    console.log(ev);
+    var lnglat = ev.lnglat;
+    console.log([lnglat.lng, lnglat.lat]);
   });
-  layer.setData(config_area, {
-    lnglat: 'lnglat'
+  var base_circle = {
+    radius: 2,
+    // 圆半径
+    fillColor: '#68bac9',
+    // 圆形填充颜色
+    strokeColor: '#68bac9',
+    // 描边颜色
+    strokeWeight: 1 // 描边宽度
+
+  };
+  var markerList = NOUTH_MARKERS.map(function (e) {
+    console.log(e.extData[3]);
+    return new AMap.Marker(Object.assign({}, e, base_circle, {
+      content: markerContent(e, e.extData[3])
+    }));
   });
-  layer.setOptions({
-    style: {
-      opacity: 0.76,
-      color: function color(res) {
-        var index = res.index;
-        return colors[index % colors.length];
-      },
-      height: function height() {
-        return Math.random() * 500 + 100;
-      }
-    }
+  markerList.forEach(function (e) {
+    e.on('click', function (ev) {
+      map.panTo(ev.lnglat);
+      var instance = getInfoWindow(ev);
+      var infoWindow = new AMap.InfoWindow({
+        isCustom: true,
+        content: instance.$el //传入 dom 对象，或者 html 字符串
+
+      });
+
+      instance.onClose = function () {
+        map.panTo(CIDP_NORTH);
+        infoWindow.close();
+      };
+
+      infoWindow.on('close', function () {
+        instance.del();
+      }); // 打开信息窗体
+
+      infoWindow.open(map, ev.lnglat);
+    });
   });
-  layer.render();
+  map.add(markerList);
 }
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/amap/src/amap.vue?vue&type=script&lang=js&
 
@@ -117085,106 +117936,6 @@ function initMap(id) {
 // EXTERNAL MODULE: ./packages/amap/src/amap.vue?vue&type=style&index=0&lang=css&
 var amapvue_type_style_index_0_lang_css_ = __webpack_require__("3c17");
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () {
-        injectStyles.call(
-          this,
-          (options.functional ? this.parent : this).$root.$options.shadowRoot
-        )
-      }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
 // CONCATENATED MODULE: ./packages/amap/src/amap.vue
 
 
@@ -117194,10 +117945,10 @@ function normalizeComponent (
 
 /* normalize component */
 
-var component = normalizeComponent(
+var amap_component = normalizeComponent(
   src_amapvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
+  amapvue_type_template_id_e307886e_render,
+  amapvue_type_template_id_e307886e_staticRenderFns,
   false,
   null,
   null,
@@ -117205,13 +117956,22 @@ var component = normalizeComponent(
   
 )
 
-/* harmony default export */ var amap = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/button/src/fsButton.vue?vue&type=template&id=735496b2&
-var fsButtonvue_type_template_id_735496b2_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsButton",class:("fsButton--" + _vm.type),on:{"click":_vm._click}},[_c('span',[_vm._t("default",[_vm._v("按钮")])],2)])}
-var fsButtonvue_type_template_id_735496b2_staticRenderFns = []
+/* harmony default export */ var amap = (amap_component.exports);
+// CONCATENATED MODULE: ./packages/amap/index.js
 
 
-// CONCATENATED MODULE: ./packages/button/src/fsButton.vue?vue&type=template&id=735496b2&
+
+amap.install = function (Vue) {
+  Vue.component(amap.name, amap);
+};
+
+/* harmony default export */ var packages_amap = (amap);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/button/src/fsButton.vue?vue&type=template&id=72502931&
+var fsButtonvue_type_template_id_72502931_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsButton",class:("fsButton--" + _vm.type + " "),style:(_vm.style),on:{"click":_vm._click}},[_c('span',[_vm._t("default",[_vm._v("按钮")])],2)])}
+var fsButtonvue_type_template_id_72502931_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./packages/button/src/fsButton.vue?vue&type=template&id=72502931&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/button/src/fsButton.vue?vue&type=script&lang=js&
 //
@@ -117222,17 +117982,47 @@ var fsButtonvue_type_template_id_735496b2_staticRenderFns = []
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ var fsButtonvue_type_script_lang_js_ = ({
-  name: "fsButton",
+  name: 'fsButton',
   props: {
     type: {
       type: String,
-      default: "primary"
+      default: 'primary'
+    },
+    color: {
+      type: String
+    },
+    //毕设时间原因 这块的简单逻辑省略
+    size: {
+      type: String,
+      default: 'middle'
     }
+  },
+  data: function data() {
+    return {
+      style: {}
+    };
   },
   methods: {
     _click: function _click() {
-      this.$emit("click");
+      this.$emit('click');
+    }
+  },
+  mounted: function mounted() {},
+  watch: {
+    color: {
+      handler: function handler(val) {
+        if (val) {
+          this.style['backgroundColor'] = val;
+        }
+      },
+      deep: true,
+      immediate: true
     }
   }
 });
@@ -117248,8 +118038,8 @@ var fsButtonvue_type_template_id_735496b2_staticRenderFns = []
 
 var fsButton_component = normalizeComponent(
   src_fsButtonvue_type_script_lang_js_,
-  fsButtonvue_type_template_id_735496b2_render,
-  fsButtonvue_type_template_id_735496b2_staticRenderFns,
+  fsButtonvue_type_template_id_72502931_render,
+  fsButtonvue_type_template_id_72502931_staticRenderFns,
   false,
   null,
   null,
@@ -117258,260 +118048,15 @@ var fsButton_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsButton = (fsButton_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/card/src/fsCard.vue?vue&type=template&id=86f294d4&
-var fsCardvue_type_template_id_86f294d4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsCard"},[_vm._t("default")],2)}
-var fsCardvue_type_template_id_86f294d4_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./packages/card/src/fsCard.vue?vue&type=template&id=86f294d4&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/card/src/fsCard.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-/* harmony default export */ var fsCardvue_type_script_lang_js_ = ({
-  name: 'fsCard',
-  data: function data() {
-    return {
-      titleText: '智慧校园监控大屏'
-    };
-  }
-});
-// CONCATENATED MODULE: ./packages/card/src/fsCard.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_fsCardvue_type_script_lang_js_ = (fsCardvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./packages/card/src/fsCard.vue
+// CONCATENATED MODULE: ./packages/button/index.js
 
 
 
-
-
-/* normalize component */
-
-var fsCard_component = normalizeComponent(
-  src_fsCardvue_type_script_lang_js_,
-  fsCardvue_type_template_id_86f294d4_render,
-  fsCardvue_type_template_id_86f294d4_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var fsCard = (fsCard_component.exports);
-// EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
-var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
-var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/dialog/src/fsDialog.vue?vue&type=template&id=3e327e14&
-var fsDialogvue_type_template_id_3e327e14_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"dialog-mask"},[_c('div',{staticClass:"dialog-innerbox"},[_c('div',{staticClass:"dialog-header"},[_vm._t("header",[_c('div',{staticClass:"text"},[_c('span',[_vm._v(_vm._s(_vm.title || '提示'))])]),_c('div',{staticClass:"icon",on:{"click":_vm._cancel}},[_c('svg',{attrs:{"t":"1618278577376","viewBox":"0 0 1024 1024","version":"1.1","xmlns":"http://www.w3.org/2000/svg","p-id":"1142"}},[_c('path',{attrs:{"d":"M842.947458 778.116917 576.847937 512.013303 842.946434 245.883083c8.67559-8.674567 13.447267-20.208251 13.43908-32.477692-0.008186-12.232602-4.7727-23.715121-13.414521-32.332383-8.655124-8.677637-20.149922-13.450337-32.384571-13.4575-12.286838 0-23.808242 4.771677-32.474622 13.434987L512.019443 447.143876 245.88206 181.050496c-8.66331-8.66331-20.175505-13.434987-32.416294-13.434987-12.239765 0-23.75196 4.770653-32.414247 13.43294-8.66024 8.636704-13.428847 20.12434-13.437034 32.356942-0.008186 12.269441 4.76349 23.803125 13.437034 32.476669l266.135336 266.13022L181.050496 778.11794c-8.664334 8.66331-13.43601 20.173458-13.43601 32.41527 0 12.239765 4.7727 23.752983 13.437034 32.417317 8.662287 8.66331 20.173458 13.43294 32.413224 13.43294 12.240789 0 23.754007-4.770653 32.416294-13.43294l266.134313-266.100544 266.101567 266.100544c8.66331 8.66331 20.185738 13.43294 32.4429 13.43294 12.265348-0.008186 23.74889-4.771677 32.369222-13.412474C860.81643 825.081555 860.821547 795.991006 842.947458 778.116917z","p-id":"1143"}})])])])],2),_c('div',{staticClass:"dialog-content"},[_vm._t("default",[_c('span',{staticClass:"dialog-content-palceholder"},[_vm._v(_vm._s(_vm.text || '这是一个提示框!'))])])],2),_c('div',{staticClass:"dialog-footer"},[_c('fs-button',{attrs:{"type":"lightdark"},on:{"click":_vm._cancel}},[_vm._v("取消")]),_c('fs-button',{attrs:{"type":"dark"},on:{"click":_vm._confirm}},[_vm._v("确认")])],1)])])}
-var fsDialogvue_type_template_id_3e327e14_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./packages/dialog/src/fsDialog.vue?vue&type=template&id=3e327e14&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/dialog/src/fsDialog.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ var fsDialogvue_type_script_lang_js_ = ({
-  name: 'fsDialog',
-  data: function data() {
-    return {
-      show: false,
-      closed: false,
-      title: '',
-      text: '',
-      dialogTitle: this.title
-    };
-  },
-  methods: {
-    _cancel: function _cancel() {
-      //绑定的用户传入的回调
-      if (typeof this.onCancel === 'function') {
-        this.onCancel();
-      }
-
-      this.close();
-    },
-    _confirm: function _confirm() {
-      if (typeof this.onConfirm === 'function') {
-        this.onConfirm();
-      }
-
-      this.close();
-    },
-    close: function close() {
-      this.closed = true;
-
-      if (typeof this.onClose === 'function') {
-        this.onClose(this);
-      }
-    }
-  },
-  watch: {
-    closed: function closed(newVal) {
-      if (newVal) {
-        this.show = false;
-      }
-    }
-  }
-});
-// CONCATENATED MODULE: ./packages/dialog/src/fsDialog.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_fsDialogvue_type_script_lang_js_ = (fsDialogvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./packages/dialog/src/fsDialog.vue
-
-
-
-
-
-/* normalize component */
-
-var fsDialog_component = normalizeComponent(
-  src_fsDialogvue_type_script_lang_js_,
-  fsDialogvue_type_template_id_3e327e14_render,
-  fsDialogvue_type_template_id_3e327e14_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var fsDialog = (fsDialog_component.exports);
-// CONCATENATED MODULE: ./packages/dialog/src/main.js
-
-
-var DialogConstructor = external_commonjs_vue_commonjs2_vue_root_Vue_default.a.extend(fsDialog);
-var instance;
-
-var Dialog = function Dialog(options) {
-  options = options || {};
-
-  if (typeof options === 'string') {
-    options = {
-      text: options
-    };
-  }
-
-  instance = new DialogConstructor({
-    data: options
-  });
-  instance.$mount();
-  document.body.insertBefore(instance.$el, document.body.firstChild);
-  instance.show = true;
-  return instance;
+fsButton.install = function (Vue) {
+  Vue.component(fsButton.name, fsButton);
 };
 
-/* harmony default export */ var main = (Dialog);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/digital-block/src/fsDigitalBlock.vue?vue&type=template&id=476197c2&scoped=true&
-var fsDigitalBlockvue_type_template_id_476197c2_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsDigitalBlock"},[_c('div',{staticClass:"fsDigitalBlock-digital"},[_vm._l((_vm.numArr),function(num,index){return _c('div',{key:index,staticClass:"fsDigitalBlock-numberBox"},[_c('span',{style:({ transform: ("translate(-50%,-" + (Number(num) * 10) + "%)") })},[_vm._v("0123456789")])])}),_c('span',{staticClass:"fsDigitalBlock-unit"},[_vm._v(_vm._s(_vm.unit || '个'))])],2),_c('div',{staticClass:"fsDigitalBlock-name"},[_c('span',[_vm._v(_vm._s(_vm.name || '数据项'))])])])}
-var fsDigitalBlockvue_type_template_id_476197c2_scoped_true_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./packages/digital-block/src/fsDigitalBlock.vue?vue&type=template&id=476197c2&scoped=true&
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
-var es_number_constructor = __webpack_require__("a9e3");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
-var es_regexp_exec = __webpack_require__("ac1f");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.split.js
-var es_string_split = __webpack_require__("1276");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/digital-block/src/fsDigitalBlock.vue?vue&type=script&lang=js&
-
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ var fsDigitalBlockvue_type_script_lang_js_ = ({
-  name: 'fsDigitalBlock',
-  props: {
-    name: {
-      type: String
-    },
-    number: {
-      type: Number
-    },
-    unit: {
-      type: String
-    }
-  },
-  data: function data() {
-    return {};
-  },
-  mounted: function mounted() {},
-  computed: {
-    numArr: function numArr() {
-      return String(this.number).split('');
-    }
-  },
-  methods: {}
-});
-// CONCATENATED MODULE: ./packages/digital-block/src/fsDigitalBlock.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_fsDigitalBlockvue_type_script_lang_js_ = (fsDigitalBlockvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./packages/digital-block/src/fsDigitalBlock.vue
-
-
-
-
-
-/* normalize component */
-
-var fsDigitalBlock_component = normalizeComponent(
-  src_fsDigitalBlockvue_type_script_lang_js_,
-  fsDigitalBlockvue_type_template_id_476197c2_scoped_true_render,
-  fsDigitalBlockvue_type_template_id_476197c2_scoped_true_staticRenderFns,
-  false,
-  null,
-  "476197c2",
-  null
-  
-)
-
-/* harmony default export */ var fsDigitalBlock = (fsDigitalBlock_component.exports);
+/* harmony default export */ var packages_button = (fsButton);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/key-visual/src/fsKeyVisual.vue?vue&type=template&id=27153d3c&
 var fsKeyVisualvue_type_template_id_27153d3c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsKeyVisual-container"},[_vm._t("default",[_vm._m(0)])],2)}
 var fsKeyVisualvue_type_template_id_27153d3c_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsKeyVisual-container-placeholder"},[_c('span',[_vm._v("请在key-visual组件中插入主视觉内容")])])}]
@@ -117560,12 +118105,21 @@ var fsKeyVisual_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsKeyVisual = (fsKeyVisual_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/line-chart/src/fsLineChart.vue?vue&type=template&id=69f954ff&
-var fsLineChartvue_type_template_id_69f954ff_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"container",staticClass:"fsChart-container",style:(("width: " + _vm.chartWidth + "px; height:" + _vm.chartHeight + "px"))})])}
-var fsLineChartvue_type_template_id_69f954ff_staticRenderFns = []
+// CONCATENATED MODULE: ./packages/key-visual/index.js
 
 
-// CONCATENATED MODULE: ./packages/line-chart/src/fsLineChart.vue?vue&type=template&id=69f954ff&
+
+fsKeyVisual.install = function (Vue) {
+  Vue.component(fsKeyVisual.name, fsKeyVisual);
+};
+
+/* harmony default export */ var key_visual = (fsKeyVisual);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/line-chart/src/fsLineChart.vue?vue&type=template&id=1009657a&
+var fsLineChartvue_type_template_id_1009657a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:_vm.id,staticClass:"fsChart-container",style:(("width: " + _vm.chartWidth + "px; height:" + _vm.chartHeight + "px"))})])}
+var fsLineChartvue_type_template_id_1009657a_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./packages/line-chart/src/fsLineChart.vue?vue&type=template&id=1009657a&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.assign.js
 var es_object_assign = __webpack_require__("cca6");
@@ -117656,6 +118210,12 @@ function showTitle(titleObj) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
  //本地自定义样式
@@ -117685,9 +118245,10 @@ function showTitle(titleObj) {
       chartWidth: this.width || constants["chartDefaultWidth"],
       chartHeight: this.height || constants["chartDefaultHeight"],
       myEcharts: null,
-      extraOptions: extraOptions,
+      extraOptions: JSON.parse(JSON.stringify(extraOptions)),
       showAxisPointer: showAxisPointer,
       showTitle: showTitle,
+      id: 'container' + Math.ceil(Math.random() * 1000),
       titleObj: this.title,
       currentCategoryAxis: 'xAxis',
       currentValueAxis: 'yAxis',
@@ -117695,7 +118256,7 @@ function showTitle(titleObj) {
     };
   },
   mounted: function mounted() {
-    this.myEcharts = echarts["init"](this.$refs.container, 'chalk');
+    this.myEcharts = echarts["init"](this.$refs[this.id], 'chalk');
     this.myEcharts.setOption(this.chartOption, true);
     this.handlerCategoryXY();
     this.showAxisPointer();
@@ -117709,24 +118270,34 @@ function showTitle(titleObj) {
     /*处理类目轴的位置*/
     handlerCategoryXY: function handlerCategoryXY() {
       if (this.transCategoryAxis) {
-        this.currentCategoryAxis = 'yAxis';
-        this.currentValueAxis = 'xAxis';
+        var _ref = [this.currentValueAxis, this.currentCategoryAxis];
+        this.currentCategoryAxis = _ref[0];
+        this.currentValueAxis = _ref[1];
       }
 
-      this.chartOption[this.currentCategoryAxis] = Object.assign({
+      this.chartOption[this.currentCategoryAxis] = Object.assign({}, this.chartOption[this.currentCategoryAxis], {
         type: 'category',
-        data: this.chartData.row
-      }, this.chartOption[this.currentCategoryAxis]);
+        data: null
+      });
       this.chartOption[this.currentValueAxis].type = 'value';
-      this.chartOption.series = this.chartData.column;
     },
     initOption: function initOption() {
+      if (this.chartData) {
+        this.$set(this.chartOption, this.currentCategoryAxis, {
+          type: 'category',
+          data: this.chartData.row
+        });
+        this.$set(this.chartOption, 'series', this.chartData.column);
+        if (this.chartData.title) this.titleObj = this.chartData.title;
+      }
+
       if (this.titleObj) this.showTitle(this.titleObj);
     }
   },
   watch: {
     chartData: {
       handler: function handler(val) {
+        if (!val) return;
         this.$set(this.chartOption, this.currentCategoryAxis, {
           type: 'category',
           data: val.row
@@ -117744,22 +118315,20 @@ function showTitle(titleObj) {
       deep: true
     },
     transCategoryAxis: {
-      handler: function handler(val) {
-        if (val) {
-          this.currentCategoryAxis = 'yAxis';
-          this.$set(this.chartOption, this.currentCategoryAxis, {
-            type: 'category',
-            data: val.row
-          });
-        }
+      handler: function handler() {
+        this.handlerCategoryXY();
       }
     },
     titleObj: {
       handler: function handler(val) {
+        if (!val) {
+          return;
+        }
+
         this.showTitle(val);
       },
-      deep: true // immediate: true,
-
+      deep: true,
+      immediate: true
     }
   }
 });
@@ -117775,8 +118344,8 @@ function showTitle(titleObj) {
 
 var fsLineChart_component = normalizeComponent(
   src_fsLineChartvue_type_script_lang_js_,
-  fsLineChartvue_type_template_id_69f954ff_render,
-  fsLineChartvue_type_template_id_69f954ff_staticRenderFns,
+  fsLineChartvue_type_template_id_1009657a_render,
+  fsLineChartvue_type_template_id_1009657a_staticRenderFns,
   false,
   null,
   null,
@@ -117785,6 +118354,15 @@ var fsLineChart_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsLineChart = (fsLineChart_component.exports);
+// CONCATENATED MODULE: ./packages/line-chart/index.js
+
+
+
+fsLineChart.install = function (Vue) {
+  Vue.component(fsLineChart.name, fsLineChart);
+};
+
+/* harmony default export */ var line_chart = (fsLineChart);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/list/src/fsList.vue?vue&type=template&id=070953d7&scoped=true&
 var fsListvue_type_template_id_070953d7_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsList"},[_c('table',[_c('colgroup',_vm._l((_vm.listHeader),function(head){return _c('col',{key:head})}),0),_c('thead',[_c('tr',_vm._l((_vm.listHeader),function(head){return _c('th',{key:head},[_vm._v(_vm._s(head))])}),0)])]),_c('table',[_c('colgroup',_vm._l((_vm.listHeader),function(head){return _c('col',{key:head})}),0),_c('tbody',_vm._l((_vm.listData),function(row,index){return _c('tr',{key:index},_vm._l((row),function(cell,index){return _c('td',{key:index},[_vm._v(" "+_vm._s(cell)+" ")])}),0)}),0)])])}
 var fsListvue_type_template_id_070953d7_scoped_true_staticRenderFns = []
@@ -117853,6 +118431,15 @@ var fsList_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsList = (fsList_component.exports);
+// CONCATENATED MODULE: ./packages/list/index.js
+
+
+
+fsList.install = function (Vue) {
+  Vue.component(fsList.name, fsList);
+};
+
+/* harmony default export */ var list = (fsList);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/marquee/src/fsMarquee.vue?vue&type=template&id=6e4bcd66&
 var fsMarqueevue_type_template_id_6e4bcd66_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsMarquee"},[_c('div',{staticClass:"fsMarquee-content"},[_vm._t("default",[_vm._v("这有一条通知")])],2)])}
 var fsMarqueevue_type_template_id_6e4bcd66_staticRenderFns = []
@@ -117897,20 +118484,37 @@ var fsMarquee_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsMarquee = (fsMarquee_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/panel/src/fsPanel.vue?vue&type=template&id=a3f9096c&
-var fsPanelvue_type_template_id_a3f9096c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsPanel"},[_c('span'),_c('span'),_c('span'),_c('span'),_vm._t("default")],2)}
-var fsPanelvue_type_template_id_a3f9096c_staticRenderFns = []
+// CONCATENATED MODULE: ./packages/marquee/index.js
 
 
-// CONCATENATED MODULE: ./packages/panel/src/fsPanel.vue?vue&type=template&id=a3f9096c&
+
+fsMarquee.install = function (Vue) {
+  Vue.component(fsMarquee.name, fsMarquee);
+};
+
+/* harmony default export */ var marquee = (fsMarquee);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/panel/src/fsPanel.vue?vue&type=template&id=4f0d5e72&
+var fsPanelvue_type_template_id_4f0d5e72_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsPanel",style:({ width: (_vm.width + "px") })},[_c('span'),_c('span'),_c('span'),_c('span'),_vm._t("default")],2)}
+var fsPanelvue_type_template_id_4f0d5e72_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./packages/panel/src/fsPanel.vue?vue&type=template&id=4f0d5e72&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/panel/src/fsPanel.vue?vue&type=script&lang=js&
+
+//
+//
 //
 //
 //
 //
 /* harmony default export */ var fsPanelvue_type_script_lang_js_ = ({
   name: 'fsPanel',
+  props: {
+    width: {
+      type: Number
+    }
+  },
   data: function data() {
     return {// titleText: '智慧校园监控大屏',
     };
@@ -117928,8 +118532,8 @@ var fsPanelvue_type_template_id_a3f9096c_staticRenderFns = []
 
 var fsPanel_component = normalizeComponent(
   src_fsPanelvue_type_script_lang_js_,
-  fsPanelvue_type_template_id_a3f9096c_render,
-  fsPanelvue_type_template_id_a3f9096c_staticRenderFns,
+  fsPanelvue_type_template_id_4f0d5e72_render,
+  fsPanelvue_type_template_id_4f0d5e72_staticRenderFns,
   false,
   null,
   null,
@@ -117938,6 +118542,15 @@ var fsPanel_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsPanel = (fsPanel_component.exports);
+// CONCATENATED MODULE: ./packages/panel/index.js
+
+
+
+fsPanel.install = function (Vue) {
+  Vue.component(fsPanel.name, fsPanel);
+};
+
+/* harmony default export */ var panel = (fsPanel);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/pie-chart/src/fsPieChart.vue?vue&type=template&id=4d2e69f0&
 var fsPieChartvue_type_template_id_4d2e69f0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"container",staticClass:"fsChart-container",style:(("width: " + _vm.chartWidth + "px; height:" + _vm.chartHeight + "px"))})])}
 var fsPieChartvue_type_template_id_4d2e69f0_staticRenderFns = []
@@ -118083,6 +118696,15 @@ var fsPieChart_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsPieChart = (fsPieChart_component.exports);
+// CONCATENATED MODULE: ./packages/pie-chart/index.js
+
+
+
+fsPieChart.install = function (Vue) {
+  Vue.component(fsPieChart.name, fsPieChart);
+};
+
+/* harmony default export */ var pie_chart = (fsPieChart);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/status-label/src/fsStatusLabel.vue?vue&type=template&id=586faf08&
 var fsStatusLabelvue_type_template_id_586faf08_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsStatusLabel",style:({
 		left: ("" + (typeof _vm.position[0] === 'number'
@@ -118184,6 +118806,15 @@ var fsStatusLabel_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsStatusLabel = (fsStatusLabel_component.exports);
+// CONCATENATED MODULE: ./packages/status-label/index.js
+
+
+
+fsStatusLabel.install = function (Vue) {
+  Vue.component(fsStatusLabel.name, fsStatusLabel);
+};
+
+/* harmony default export */ var status_label = (fsStatusLabel);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/title/src/fsTitle.vue?vue&type=template&id=c99944d6&
 var fsTitlevue_type_template_id_c99944d6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fstitle"},[_c('div',{staticClass:"fstitle-container"},[_c('span',{staticClass:"fstitle-line--right"}),_c('span',{staticClass:"fstitle-text"},[_vm._v(_vm._s(_vm.titleText))]),_c('span',{staticClass:"fstitle-line--left"})])])}
 var fsTitlevue_type_template_id_c99944d6_staticRenderFns = []
@@ -118232,12 +118863,21 @@ var fsTitle_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsTitle = (fsTitle_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/video-player/src/fsVideoPlayer.vue?vue&type=template&id=15746296&
-var fsVideoPlayervue_type_template_id_15746296_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsVideoPlayer"},[_vm._m(0),_c('video',{staticClass:"fsVideoPlayer-container",attrs:{"src":_vm.src,"loop":"","autoplay":"autoplay"}})])}
-var fsVideoPlayervue_type_template_id_15746296_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsVideoPlayer-title"},[_c('span',[_vm._v("实时监控")])])}]
+// CONCATENATED MODULE: ./packages/title/index.js
 
 
-// CONCATENATED MODULE: ./packages/video-player/src/fsVideoPlayer.vue?vue&type=template&id=15746296&
+
+fsTitle.install = function (Vue) {
+  Vue.component(fsTitle.name, fsTitle);
+};
+
+/* harmony default export */ var title = (fsTitle);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/video-player/src/fsVideoPlayer.vue?vue&type=template&id=5c95411a&
+var fsVideoPlayervue_type_template_id_5c95411a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsVideoPlayer"},[_vm._m(0),_c('video',{staticClass:"fsVideoPlayer-container",attrs:{"src":_vm.src,"loop":"","autoplay":"false"}})])}
+var fsVideoPlayervue_type_template_id_5c95411a_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsVideoPlayer-title"},[_c('span',[_vm._v("实时监控")])])}]
+
+
+// CONCATENATED MODULE: ./packages/video-player/src/fsVideoPlayer.vue?vue&type=template&id=5c95411a&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/video-player/src/fsVideoPlayer.vue?vue&type=script&lang=js&
 //
@@ -118267,8 +118907,8 @@ var fsVideoPlayervue_type_template_id_15746296_staticRenderFns = [function () {v
 
 var fsVideoPlayer_component = normalizeComponent(
   src_fsVideoPlayervue_type_script_lang_js_,
-  fsVideoPlayervue_type_template_id_15746296_render,
-  fsVideoPlayervue_type_template_id_15746296_staticRenderFns,
+  fsVideoPlayervue_type_template_id_5c95411a_render,
+  fsVideoPlayervue_type_template_id_5c95411a_staticRenderFns,
   false,
   null,
   null,
@@ -118277,6 +118917,15 @@ var fsVideoPlayer_component = normalizeComponent(
 )
 
 /* harmony default export */ var fsVideoPlayer = (fsVideoPlayer_component.exports);
+// CONCATENATED MODULE: ./packages/video-player/index.js
+
+
+
+fsVideoPlayer.install = function (Vue) {
+  Vue.component(fsVideoPlayer.name, fsVideoPlayer);
+};
+
+/* harmony default export */ var video_player = (fsVideoPlayer);
 // CONCATENATED MODULE: ./packages/index.js
 
 
@@ -118296,7 +118945,7 @@ var fsVideoPlayer_component = normalizeComponent(
 
 
 
-var components = [amap, fsButton, fsCard, fsDigitalBlock, fsKeyVisual, fsLineChart, fsList, fsMarquee, fsPanel, fsPieChart, fsStatusLabel, fsTitle, fsVideoPlayer];
+var components = [packages_amap, packages_button, card, digital_block, key_visual, line_chart, list, marquee, panel, pie_chart, status_label, title, video_player];
 
 var packages_install = function install(Vue) {
   Vue.prototype.$fullscreen = toggleFullScreen;
@@ -118304,14 +118953,27 @@ var packages_install = function install(Vue) {
   components.forEach(function (item) {
     Vue.component(item.name, item);
   });
-
-  if (typeof window !== 'undefined' && window.Vue) {
-    install(window.Vue);
-  }
 };
 
+if (typeof window !== 'undefined' && window.Vue) {
+  packages_install(window.Vue);
+}
+
 /* harmony default export */ var packages_0 = ({
-  install: packages_install
+  install: packages_install,
+  amap: packages_amap,
+  button: packages_button,
+  card: card,
+  digitalblock: digital_block,
+  keyvisual: key_visual,
+  linechart: line_chart,
+  list: list,
+  marquee: marquee,
+  panel: panel,
+  piechart: pie_chart,
+  statuslabel: status_label,
+  title: title,
+  videoplayer: video_player
 });
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 

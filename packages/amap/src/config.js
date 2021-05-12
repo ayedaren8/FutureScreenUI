@@ -36,8 +36,8 @@ export const NOUTH_MARKERS = [
 	{
 		position: NOUTH_BUILDINGS.N1,
 		center: NOUTH_BUILDINGS.N1,
-		title: '北辰员1号楼',
-		text: '北辰员1号楼',
+		title: '北辰园1号楼',
+		text: '北辰园1号楼',
 		id: 'N1',
 		get extData() {
 			return extDatas[this.id];
@@ -46,8 +46,8 @@ export const NOUTH_MARKERS = [
 	{
 		position: NOUTH_BUILDINGS.N2,
 		center: NOUTH_BUILDINGS.N2,
-		title: '北辰员2号楼',
-		text: '北辰员2号楼',
+		title: '北辰园2号楼',
+		text: '北辰园2号楼',
 		id: 'N2',
 		get extData() {
 			return extDatas[this.id];
@@ -56,8 +56,8 @@ export const NOUTH_MARKERS = [
 	{
 		position: NOUTH_BUILDINGS.N3,
 		center: NOUTH_BUILDINGS.N3,
-		title: '北辰员3号楼',
-		text: '北辰员3号楼',
+		title: '北辰园3号楼',
+		text: '北辰园3号楼',
 		id: 'N3',
 		get extData() {
 			return extDatas[this.id];
@@ -66,8 +66,8 @@ export const NOUTH_MARKERS = [
 	{
 		position: NOUTH_BUILDINGS.N4,
 		center: NOUTH_BUILDINGS.N4,
-		title: '北辰员4号楼',
-		text: '北辰员4号楼',
+		title: '北辰园4号楼',
+		text: '北辰园4号楼',
 		id: 'N4',
 		get extData() {
 			return extDatas[this.id];
@@ -76,8 +76,8 @@ export const NOUTH_MARKERS = [
 	{
 		position: NOUTH_BUILDINGS.N5,
 		center: NOUTH_BUILDINGS.N5,
-		title: '北辰员5号楼',
-		text: '北辰员5号楼',
+		title: '北辰园5号楼',
+		text: '北辰园5号楼',
 		id: 'N5',
 		get extData() {
 			return extDatas[this.id];
@@ -86,8 +86,8 @@ export const NOUTH_MARKERS = [
 	{
 		position: NOUTH_BUILDINGS.N6,
 		center: NOUTH_BUILDINGS.N6,
-		title: '北辰员6号楼',
-		text: '北辰员6号楼',
+		title: '北辰园6号楼',
+		text: '北辰园6号楼',
 		id: 'N6',
 		get extData() {
 			return extDatas[this.id];
@@ -96,8 +96,8 @@ export const NOUTH_MARKERS = [
 	{
 		position: NOUTH_BUILDINGS.WANGSHU,
 		center: NOUTH_BUILDINGS.WANGSHU,
-		title: '北辰员校号楼餐厅',
-		text: '北辰员校号楼餐厅',
+		title: '北辰园校号楼餐厅',
+		text: '北辰园校号楼餐厅',
 		id: 'WANGSHU',
 		get extData() {
 			return extDatas[this.id];

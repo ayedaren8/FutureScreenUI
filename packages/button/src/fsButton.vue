@@ -1,5 +1,10 @@
 <template>
-	<div class="fsButton" :style="style" :class="`fsButton--${type} `" @click="_click">
+	<div
+		class="fsButton"
+		:style="style"
+		:class="`fsButton--${type} `"
+		@click="_click"
+	>
 		<span>
 			<slot>按钮</slot>
 		</span>
@@ -30,11 +35,16 @@ export default {
 			this.$emit('click');
 		},
 	},
+	mounted() {},
 	watch: {
 		color: {
 			handler: function(val) {
-				this.style['backgroundColor'] = val;
+				if (val) {
+					this.style['backgroundColor'] = val;
+				}
 			},
+			deep: true,
+			immediate: true,
 		},
 	},
 };

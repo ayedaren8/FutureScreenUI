@@ -19,15 +19,17 @@
 	border-radius: 2px;
 
 	&:hover {
-		color: #ffffff;
-		background-color: rgba($color-brandcolor, $alpha: 0.8);
+		opacity: 0.6;
 	}
 
 	&--light {
 		background-color: $color-light--primary;
 		&:hover {
 			color: #ffffff;
-			background-color: rgba($color-light--primary, $alpha: 0.8);
+			background-color: rgba(
+				$color-light--primary,
+				$alpha: 0.8
+			);
 		}
 	}
 
@@ -35,15 +37,24 @@
 		background-color: $color-dark--primary;
 		&:hover {
 			color: #ffffff;
-			background-color: rgba($color-dark--primary, $alpha: 0.8);
+			background-color: rgba(
+				$color-dark--primary,
+				$alpha: 0.8
+			);
 		}
 	}
 
 	&--lightdark {
-		background-color: rgba($color-dark--primary, $alpha: 0.6);
+		background-color: rgba(
+			$color-dark--primary,
+			$alpha: 0.6
+		);
 		&:hover {
 			color: #ffffff;
-			background-color: rgba($color-dark--primary, $alpha: 0.4);
+			background-color: rgba(
+				$color-dark--primary,
+				$alpha: 0.4
+			);
 		}
 	}
 }

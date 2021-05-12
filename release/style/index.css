@@ -17,11 +17,12 @@
 .fsPanel {
   box-sizing: border-box;
   margin: 2vh 2vw;
-  max-width: 420px;
+  width: 420px;
   max-height: 90vh;
+  overflow: hidden;
   position: relative;
   display: block; }
-  .fsPanel::before {
+  .fsPanel::after {
     content: '';
     z-index: 2;
     position: absolute;
@@ -81,6 +82,7 @@
   position: relative;
   z-index: 999;
   margin: 16px 10px;
+  margin-top: 10px;
   box-sizing: border-box;
   border: 1px solid rgba(104, 186, 201, 0.87);
   box-shadow: 0px 0px 16px rgba(104, 186, 201, 0.6) inset;
@@ -150,8 +152,7 @@
   font-size: 18px;
   border-radius: 2px; }
   .fsButton:hover {
-    color: #ffffff;
-    background-color: rgba(104, 186, 201, 0.8); }
+    opacity: 0.6; }
   .fsButton--light {
     background-color: #0086ff; }
     .fsButton--light:hover {
@@ -404,9 +405,9 @@
       height: 8px;
       border-radius: 50%;
       margin-right: 8px;
-      color: #fac500;
-      background: #fac500;
-      box-shadow: 0px 0px 8px 4px rgba(250, 197, 0, 0.6); }
+      color: #bb8c0f;
+      background: #bb8c0f;
+      box-shadow: 0px 0px 8px 4px rgba(187, 140, 15, 0.6); }
     .fsStatusLabel-point--danger::before {
       display: inline-block;
       content: '';
@@ -414,9 +415,9 @@
       height: 8px;
       border-radius: 50%;
       margin-right: 8px;
-      color: #ff2700;
-      background: #ff2700;
-      box-shadow: 0px 0px 8px 4px rgba(255, 39, 0, 0.6); }
+      color: #b20000;
+      background: #b20000;
+      box-shadow: 0px 0px 8px 4px rgba(178, 0, 0, 0.6); }
 
 .fsVideoPlayer {
   display: block;
