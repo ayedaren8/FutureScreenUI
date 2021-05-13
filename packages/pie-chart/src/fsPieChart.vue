@@ -1,14 +1,27 @@
 <template>
 	<div>
-		<div ref="container" class="fsChart-container" :style="`width: ${chartWidth}px; height:${chartHeight}px`"></div>
+		<div
+			:ref="id"
+			class="fsChart-container"
+			:style="
+				`width: ${chartWidth}px; height:${chartHeight}px`
+			"
+		></div>
 	</div>
 </template>
 <script>
 import * as echarts from 'echarts';
 import './chalk';
-import { chartDefaultWidth, chartDefaultHeight } from '../../constants';
+import {
+	chartDefaultWidth,
+	chartDefaultHeight,
+} from '../../constants';
 //本地自定义样式
-import { staticOptions, extraOptions, showTitle } from './config';
+const {
+	staticOptions,
+	extraOptions,
+	showTitle,
+} = require('./config');
 export default {
 	name: 'fsPieChart',
 	props: {
@@ -16,22 +29,30 @@ export default {
 		title: { type: [String, Object] },
 		width: { type: [Number] },
 		height: { type: [Number] },
+		ring: { type: Boolean, default: false },
 	},
-
 	data() {
 		return {
+			id: 'container' + Math.ceil(Math.random() * 1000),
 			chartWidth: this.width || chartDefaultWidth,
 			chartHeight: this.height || chartDefaultHeight,
 			myEcharts: null,
-			extraOptions,
+			extraOptions: JSON.parse(
+				JSON.stringify(extraOptions)
+			),
 			showTitle,
 			titleObj: this.title,
-			chartOption: JSON.parse(JSON.stringify(staticOptions)),
+			chartOption: JSON.parse(
+				JSON.stringify(staticOptions)
+			),
 		};
 	},
 
 	mounted() {
-		this.myEcharts = echarts.init(this.$refs.container, 'chalk');
+		this.myEcharts = echarts.init(
+			this.$refs[this.id],
+			'chalk'
+		);
 		this.myEcharts.setOption(this.chartOption, true);
 		this.initOption();
 	},
@@ -50,11 +71,12 @@ export default {
 	watch: {
 		chartData: {
 			handler: function(val) {
-				this.$set(this.chartOption.series[0], 'data', val.data);
-				// console.log(this.chartOption.series);
-
+				this.$set(
+					this.chartOption.series[0],
+					'data',
+					val.data
+				);
 				if (val.title) this.titleObj = val.title;
-				// console.log(val);
 			},
 			deep: true,
 			immediate: true,
@@ -67,7 +89,17 @@ export default {
 			deep: true,
 			// immediate: true,
 		},
-
+		ring: {
+			handler: function(val) {
+				if (val) {
+					this.$set(this.chartOption.series[0], 'radius', [
+						'50%',
+						'75%',
+					]);
+				}
+			},
+			immediate: true,
+		},
 		titleObj: {
 			handler: function() {
 				this.showTitle();

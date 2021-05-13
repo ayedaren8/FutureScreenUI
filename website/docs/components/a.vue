@@ -1,21 +1,37 @@
 <template>
-	<fs-card><fs-digital-block v-bind="digitalData[0]"/><fs-digital-block v-bind="digitalData[1]"/></fs-card>
+	<div class="container">
+		<div
+			class="box"
+			v-for="(item, index) in colorList"
+			:key="index"
+		></div>
+	</div>
 </template>
 
 <script>
 export default {
 	data() {
 		return {
-			digitalData: mockData.digitalData(),
+			colorList: [
+				'#000510',
+				'#68bac9',
+				'#ff0022',
+				'#0acc78',
+				'#2ed13d',
+				'#bb8c0f',
+				'#b20000',
+			],
 		};
-	},
-	mounted() {
-		setInterval(
-			function() {
-				this.digitalData = mockData.digitalData();
-			}.bind(this),
-			3500
-		);
 	},
 };
 </script>
+
+<style>
+.container {
+	display: flex;
+	flex-wrap: wrap;
+}
+.box {
+	display: inline-block;
+}
+</style>

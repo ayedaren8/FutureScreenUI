@@ -12,7 +12,12 @@ function mockdata(i, j) {
 
 function mockPieData() {
 	return Mock.mock({
-		'data|5': [{ 'value|1-500': 0, 'name|1': () => Mock.Random.word() }],
+		'data|5': [
+			{
+				'value|1-500': 0,
+				'name|1': () => Mock.Random.word(),
+			},
+		],
 	});
 }
 
@@ -22,7 +27,15 @@ export function barData() {
 			text: '校内各楼宇人员数量',
 			subtext: '统计时间：2021年4月5日',
 		},
-		row: ['天仪楼', '承基楼', '文德楼', '操场', '长庚楼', '体育馆', '餐厅'],
+		row: [
+			'天仪楼',
+			'承基楼',
+			'文德楼',
+			'操场',
+			'长庚楼',
+			'体育馆',
+			'餐厅',
+		],
 		column: [
 			{
 				name: '老师',
@@ -87,15 +100,42 @@ export function lineData() {
 export function tableData() {
 	let headData = ['事件', '时间'];
 	let rowData = [
-		['天仪楼8楼消防栓老化，存在漏水现象', new Date().toLocaleTimeString()],
-		['承基楼2号电梯发生故障，请及时处理', new Date().toLocaleTimeString()],
-		['天水路有校外车辆超速行驶', new Date().toLocaleTimeString()],
-		['图书馆四层书库湿度超标', new Date().toLocaleTimeString()],
-		['N3525宿舍电力负载异常', new Date().toLocaleTimeString()],
-		['N3525宿舍电力负载异常', new Date().toLocaleTimeString()],
-		['N3525宿舍电力负载异常', new Date().toLocaleTimeString()],
-		['N3525宿舍电力负载异常', new Date().toLocaleTimeString()],
-		['N3525宿舍电力负载异常', new Date().toLocaleTimeString()],
+		[
+			'天仪楼8楼消防栓老化，存在漏水现象',
+			new Date().toLocaleTimeString(),
+		],
+		[
+			'承基楼2号电梯发生故障，请及时处理',
+			new Date().toLocaleTimeString(),
+		],
+		[
+			'天水路有校外车辆超速行驶',
+			new Date().toLocaleTimeString(),
+		],
+		[
+			'图书馆四层书库湿度超标',
+			new Date().toLocaleTimeString(),
+		],
+		[
+			'N3525宿舍电力负载异常',
+			new Date().toLocaleTimeString(),
+		],
+		[
+			'N3525宿舍电力负载异常',
+			new Date().toLocaleTimeString(),
+		],
+		[
+			'N3525宿舍电力负载异常',
+			new Date().toLocaleTimeString(),
+		],
+		[
+			'N3525宿舍电力负载异常',
+			new Date().toLocaleTimeString(),
+		],
+		[
+			'N3525宿舍电力负载异常',
+			new Date().toLocaleTimeString(),
+		],
 	];
 
 	return {

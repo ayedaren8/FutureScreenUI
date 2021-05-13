@@ -1,6 +1,8 @@
 # 全屏
+![image](./img/fullscreen.png)
+
 <template>
-	<fs-button @click="show">全屏</fs-button>
+	<fs-button @click="show" type='prπimary'>试一下</fs-button>
 </template>
 
 <script>
@@ -17,3 +19,10 @@ export default {
 	},
 };
 </script>
+
+### 使用
+``` js
+this.$fullscreen()
+```
+
+在vue里使用this.$fullscreen()触发，再次调用关闭。

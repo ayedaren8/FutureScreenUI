@@ -116842,6 +116842,54 @@ module.exports = Array.isArray || function isArray(arg) {
 
 /***/ }),
 
+/***/ "e947":
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__("d3b7");
+
+__webpack_require__("25f0");
+
+var staticOptions = {
+  //坐标轴指示器
+  tooltip: {
+    show: true
+  },
+  label: {
+    color: '#68bac9'
+  },
+  series: [{
+    type: 'pie',
+    top: '18%'
+  }]
+};
+var extraOptions = {
+  title: {
+    show: true
+  }
+};
+
+function showTitle() {
+  if (Object.prototype.toString.call(this.titleObj) === '[object Object]') {
+    var title = this.extraOptions.title;
+    if (this.titleObj.text) title.text = this.titleObj.text;
+    if (this.titleObj.subtext) title.subtext = this.titleObj.subtext;
+    this.chartOption.title = title;
+  } else {
+    this.chartOption.title = {
+      show: true,
+      text: this.titleObj
+    };
+  }
+}
+
+module.exports = {
+  showTitle: showTitle,
+  staticOptions: staticOptions,
+  extraOptions: extraOptions
+};
+
+/***/ }),
+
 /***/ "e95a":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -117206,22 +117254,6 @@ var Dialog = function Dialog(options) {
 
 /* harmony default export */ var main = (Dialog);
 // CONCATENATED MODULE: ./packages/utils.js
-function rfs() {
-  /* 进入全屏*/
-  var element = document.documentElement;
-  var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-
-  if (requestMethod) {
-    requestMethod.call(element);
-  } else if (typeof window.ActiveXObject !== 'undefined') {
-    // eslint-disable-next-line no-undef
-    var wscript = new ActiveXObject('WScript.Shell');
-
-    if (wscript !== null) {
-      wscript.SendKeys('{F11}');
-    }
-  }
-}
 function toggleFullScreen() {
   var doc = window.document;
   var docEl = doc.documentElement;
@@ -118440,12 +118472,12 @@ fsList.install = function (Vue) {
 };
 
 /* harmony default export */ var list = (fsList);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/marquee/src/fsMarquee.vue?vue&type=template&id=6e4bcd66&
-var fsMarqueevue_type_template_id_6e4bcd66_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsMarquee"},[_c('div',{staticClass:"fsMarquee-content"},[_vm._t("default",[_vm._v("这有一条通知")])],2)])}
-var fsMarqueevue_type_template_id_6e4bcd66_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/marquee/src/fsMarquee.vue?vue&type=template&id=0b98f1e4&
+var fsMarqueevue_type_template_id_0b98f1e4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fsMarquee"},[_c('div',{staticClass:"fsMarquee-content"},[_vm._t("default",[_vm._v(_vm._s(_vm.message))])],2)])}
+var fsMarqueevue_type_template_id_0b98f1e4_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./packages/marquee/src/fsMarquee.vue?vue&type=template&id=6e4bcd66&
+// CONCATENATED MODULE: ./packages/marquee/src/fsMarquee.vue?vue&type=template&id=0b98f1e4&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/marquee/src/fsMarquee.vue?vue&type=script&lang=js&
 //
@@ -118454,12 +118486,18 @@ var fsMarqueevue_type_template_id_6e4bcd66_staticRenderFns = []
 //
 //
 //
+//
+//
 /* harmony default export */ var fsMarqueevue_type_script_lang_js_ = ({
   name: 'fsMarquee',
+  props: {
+    message: {
+      type: String,
+      default: '这有一条通知'
+    }
+  },
   data: function data() {
-    return {
-      titleText: '智慧校园监控大屏'
-    };
+    return {};
   }
 });
 // CONCATENATED MODULE: ./packages/marquee/src/fsMarquee.vue?vue&type=script&lang=js&
@@ -118474,8 +118512,8 @@ var fsMarqueevue_type_template_id_6e4bcd66_staticRenderFns = []
 
 var fsMarquee_component = normalizeComponent(
   src_fsMarqueevue_type_script_lang_js_,
-  fsMarqueevue_type_template_id_6e4bcd66_render,
-  fsMarqueevue_type_template_id_6e4bcd66_staticRenderFns,
+  fsMarqueevue_type_template_id_0b98f1e4_render,
+  fsMarqueevue_type_template_id_0b98f1e4_staticRenderFns,
   false,
   null,
   null,
@@ -118551,52 +118589,24 @@ fsPanel.install = function (Vue) {
 };
 
 /* harmony default export */ var panel = (fsPanel);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/pie-chart/src/fsPieChart.vue?vue&type=template&id=4d2e69f0&
-var fsPieChartvue_type_template_id_4d2e69f0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:"container",staticClass:"fsChart-container",style:(("width: " + _vm.chartWidth + "px; height:" + _vm.chartHeight + "px"))})])}
-var fsPieChartvue_type_template_id_4d2e69f0_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"21e107a6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/pie-chart/src/fsPieChart.vue?vue&type=template&id=3829721a&
+var fsPieChartvue_type_template_id_3829721a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{ref:_vm.id,staticClass:"fsChart-container",style:(("width: " + _vm.chartWidth + "px; height:" + _vm.chartHeight + "px"))})])}
+var fsPieChartvue_type_template_id_3829721a_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./packages/pie-chart/src/fsPieChart.vue?vue&type=template&id=4d2e69f0&
+// CONCATENATED MODULE: ./packages/pie-chart/src/fsPieChart.vue?vue&type=template&id=3829721a&
 
 // EXTERNAL MODULE: ./packages/pie-chart/src/chalk.js
 var src_chalk = __webpack_require__("ae9f");
 
-// CONCATENATED MODULE: ./packages/pie-chart/src/config.js
-
-
-var config_staticOptions = {
-  //坐标轴指示器
-  tooltip: {
-    show: true
-  },
-  label: {
-    color: '#68bac9'
-  },
-  series: [{
-    type: 'pie',
-    top: '18%'
-  }]
-};
-var config_extraOptions = {
-  title: {
-    show: true
-  }
-};
-function config_showTitle() {
-  if (Object.prototype.toString.call(this.titleObj) === '[object Object]') {
-    var title = this.extraOptions.title;
-    if (this.titleObj.text) title.text = this.titleObj.text;
-    if (this.titleObj.subtext) title.subtext = this.titleObj.subtext;
-    this.chartOption.title = title;
-  } else {
-    this.chartOption.title = {
-      show: true,
-      text: this.titleObj
-    };
-  }
-}
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./packages/pie-chart/src/fsPieChart.vue?vue&type=script&lang=js&
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -118606,6 +118616,10 @@ function config_showTitle() {
 
  //本地自定义样式
 
+var _require = __webpack_require__("e947"),
+    fsPieChartvue_type_script_lang_js_staticOptions = _require.staticOptions,
+    fsPieChartvue_type_script_lang_js_extraOptions = _require.extraOptions,
+    fsPieChartvue_type_script_lang_js_showTitle = _require.showTitle;
 
 /* harmony default export */ var fsPieChartvue_type_script_lang_js_ = ({
   name: 'fsPieChart',
@@ -118621,21 +118635,26 @@ function config_showTitle() {
     },
     height: {
       type: [Number]
+    },
+    ring: {
+      type: Boolean,
+      default: false
     }
   },
   data: function data() {
     return {
+      id: 'container' + Math.ceil(Math.random() * 1000),
       chartWidth: this.width || constants["chartDefaultWidth"],
       chartHeight: this.height || constants["chartDefaultHeight"],
       myEcharts: null,
-      extraOptions: config_extraOptions,
-      showTitle: config_showTitle,
+      extraOptions: JSON.parse(JSON.stringify(fsPieChartvue_type_script_lang_js_extraOptions)),
+      showTitle: fsPieChartvue_type_script_lang_js_showTitle,
       titleObj: this.title,
-      chartOption: JSON.parse(JSON.stringify(config_staticOptions))
+      chartOption: JSON.parse(JSON.stringify(fsPieChartvue_type_script_lang_js_staticOptions))
     };
   },
   mounted: function mounted() {
-    this.myEcharts = echarts["init"](this.$refs.container, 'chalk');
+    this.myEcharts = echarts["init"](this.$refs[this.id], 'chalk');
     this.myEcharts.setOption(this.chartOption, true);
     this.initOption();
   },
@@ -118651,9 +118670,8 @@ function config_showTitle() {
   watch: {
     chartData: {
       handler: function handler(val) {
-        this.$set(this.chartOption.series[0], 'data', val.data); // console.log(this.chartOption.series);
-
-        if (val.title) this.titleObj = val.title; // console.log(val);
+        this.$set(this.chartOption.series[0], 'data', val.data);
+        if (val.title) this.titleObj = val.title;
       },
       deep: true,
       immediate: true
@@ -118664,6 +118682,14 @@ function config_showTitle() {
       },
       deep: true // immediate: true,
 
+    },
+    ring: {
+      handler: function handler(val) {
+        if (val) {
+          this.$set(this.chartOption.series[0], 'radius', ['50%', '75%']);
+        }
+      },
+      immediate: true
     },
     titleObj: {
       handler: function handler() {
@@ -118686,8 +118712,8 @@ function config_showTitle() {
 
 var fsPieChart_component = normalizeComponent(
   src_fsPieChartvue_type_script_lang_js_,
-  fsPieChartvue_type_template_id_4d2e69f0_render,
-  fsPieChartvue_type_template_id_4d2e69f0_staticRenderFns,
+  fsPieChartvue_type_template_id_3829721a_render,
+  fsPieChartvue_type_template_id_3829721a_staticRenderFns,
   false,
   null,
   null,
